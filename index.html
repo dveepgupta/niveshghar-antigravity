@@ -3,24 +3,95 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NiveshGhar | Dveep's Wealth Advisory & Mutual Fund Calculators</title>
-  <meta name="description" content="NiveshGhar by Dveep - Premier Mutual Fund Advisory, 25-Year Historical Index Backtesting Engine, and comprehensive financial calculators for goal-based wealth creation.">
+  <title>NiveshGhar | 3D Interactive Wealth Advisory & Index Backtesting</title>
+  <meta name="description" content="NiveshGhar by Dveep, CFA/MFD - Institutional-grade portfolio backtesting, 3D interactive wealth analytics, and systematic investment compounding.">
   <link rel="stylesheet" href="styles/main.css">
+  <!-- Three.js CDN for lightweight, high-performance 3D canvas rendering -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* 3D Hero Section Styling */
+    .hero-3d-wrapper {
+      position: relative;
+      min-height: 85vh;
+      background: linear-gradient(180deg, #1C0338 0%, #2D0856 50%, #3B0D6F 100%);
+      color: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 5rem 1.5rem 6rem;
+      border-bottom-left-radius: 40px;
+      border-bottom-right-radius: 40px;
+      overflow: hidden;
+    }
+
+    #three-canvas-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.85;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 5;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .floating-card-3d {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 20px;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      transform-style: preserve-3d;
+      transition: transform 0.1s ease-out;
+      margin-top: 2rem;
+    }
+
+    .pulse-glow {
+      animation: pulseGlow 3s infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 20px rgba(147, 51, 234, 0.4); }
+      100% { box-shadow: 0 0 45px rgba(192, 132, 252, 0.8); }
+    }
+
+    /* Interactive 3D tilt effect on main feature cards */
+    .tilt-card {
+      transition: transform 0.25s cubic-bezier(0.2, 0, 0.2, 1), box-shadow 0.25s ease;
+      transform: perspective(1000px);
+    }
+    .tilt-card:hover {
+      transform: perspective(1000px) translateY(-6px) rotateX(2deg) rotateY(-2deg);
+      box-shadow: 0 16px 40px rgba(109, 40, 217, 0.12);
+    }
+  </style>
 </head>
 <body>
   <!-- Royal Purple Navbar -->
   <nav class="navbar">
     <div class="nav-container">
       <a href="index.html" class="logo">
-        <span style="color: #C4B5FD;">◆</span> Nivesh<span style="color: #DDD6FE;">Ghar</span>
-        <span class="logo-badge">Wealth Advisory</span>
+        <span style="color: #C4B5FD; font-size: 1.5rem;">◆</span> Nivesh<span style="color: #DDD6FE;">Ghar</span>
+        <span class="logo-badge">3D Advisory</span>
       </a>
       <ul class="nav-links">
         <li><a href="index.html" class="nav-link active">Home</a></li>
         <li><a href="calculators/dveep-special.html" class="nav-link" style="color: #DDD6FE; font-weight: 700;">★ Dveep's Special</a></li>
         <li><a href="calculators/sip.html" class="nav-link">SIP</a></li>
-        <li><a href="calculators/swp.html" class="nav-link">SWP (Retirement)</a></li>
+        <li><a href="calculators/swp.html" class="nav-link">SWP</a></li>
         <li><a href="calculators/goal-planner.html" class="nav-link">Goal Planner</a></li>
         <li><a href="client-discovery.html" class="nav-link">20-Q Health Check</a></li>
       </ul>
@@ -32,51 +103,76 @@
     </div>
   </nav>
 
-  <!-- Royal Purple Hero Section (as in reference image) -->
-  <section class="hero-wrapper">
-    <div class="hero-pill">
-      <span>✨ Certified Fiduciary Advisory • CFA & MFD</span>
-    </div>
-    <h1 class="hero-title">
-      Navigate the Future of Wealth with <br>
-      NiveshGhar Advisory
-    </h1>
-    <p class="hero-subtitle">
-      Institutional-grade portfolio backtesting, 25-year index historical analytics, and goal-aligned mutual fund wealth creation for clients.
-    </p>
-    <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-      <a href="calculators/dveep-special.html" class="btn btn-gold" style="font-size: 1.05rem; padding: 0.85rem 1.85rem;">
-        ★ Launch Dveep's Special Backtester
-      </a>
-      <a href="client-discovery.html" class="btn btn-outline" style="font-size: 1.05rem; padding: 0.85rem 1.85rem;">
-        Take 20-Q Financial Health Check
-      </a>
+  <!-- 3D Animated Interactive Hero Section -->
+  <section class="hero-3d-wrapper" id="hero3dSection">
+    <!-- WebGL Three.js Canvas Container -->
+    <div id="three-canvas-container"></div>
+
+    <div class="hero-content">
+      <div class="hero-pill pulse-glow">
+        <span>✨ 3D Interactive Wealth Intelligence • Dveep, CFA & MFD</span>
+      </div>
+      <h1 class="hero-title" style="font-size: clamp(2.5rem, 5.5vw, 4.2rem); text-shadow: 0 4px 30px rgba(0,0,0,0.5);">
+        Navigate the Future of Wealth
+      </h1>
+      <p class="hero-subtitle" style="font-size: 1.2rem; color: #E9D5FF; max-width: 740px;">
+        Institutional-grade portfolio backtesting, multi-cycle market crash recovery simulations, and science-backed mutual fund compounding.
+      </p>
+
+      <div style="display: flex; justify-content: center; gap: 1.25rem; flex-wrap: wrap; margin-bottom: 2rem;">
+        <a href="calculators/dveep-special.html" class="btn btn-gold" style="font-size: 1.05rem; padding: 0.9rem 2rem; color: #2D0856;">
+          ★ Launch Dveep's Special Backtester
+        </a>
+        <a href="client-discovery.html" class="btn btn-outline" style="font-size: 1.05rem; padding: 0.9rem 2rem; border-color: rgba(255,255,255,0.4);">
+          Take 20-Q Financial Health Check
+        </a>
+      </div>
+
+      <!-- 3D Floating Interactive Metrics Bar -->
+      <div class="floating-card-3d" id="floatingCard">
+        <div style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 1.5rem;">
+          <div>
+            <div style="font-size: 0.8rem; color: #D8C6EE; text-transform: uppercase; font-weight: 600;">25Y Nifty 50 Return</div>
+            <div style="font-size: 1.8rem; font-weight: 800; color: #4ADE80; font-family: Outfit;">+14.1% CAGR</div>
+          </div>
+          <div style="border-left: 1px solid rgba(255,255,255,0.15); height: 40px;" class="hide-mobile"></div>
+          <div>
+            <div style="font-size: 0.8rem; color: #D8C6EE; text-transform: uppercase; font-weight: 600;">Midcap 150 Growth</div>
+            <div style="font-size: 1.8rem; font-weight: 800; color: #C084FC; font-family: Outfit;">+18.2% CAGR</div>
+          </div>
+          <div style="border-left: 1px solid rgba(255,255,255,0.15); height: 40px;" class="hide-mobile"></div>
+          <div>
+            <div style="font-size: 0.8rem; color: #D8C6EE; text-transform: uppercase; font-weight: 600;">Crash Recovery Ratio</div>
+            <div style="font-size: 1.8rem; font-weight: 800; color: #FDE047; font-family: Outfit;">100% Over 5Y</div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- Main Content in Crisp Clean Layout -->
-  <main class="main-wrapper">
-    <!-- Flagship Showcase Card -->
-    <section style="margin-top: -2.5rem; margin-bottom: 3.5rem; position: relative; z-index: 10;">
-      <div class="card card-highlight">
+  <main class="main-wrapper" style="margin-top: 2.5rem;">
+    <!-- Flagship Showcase Card with 3D Tilt -->
+    <section style="margin-bottom: 3.5rem;">
+      <div class="card card-highlight tilt-card">
         <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1.5rem;">
           <div>
-            <span class="badge-tag" style="margin-bottom: 0.5rem;">FLAGSHIP BACKTEST ENGINE</span>
-            <h2 style="font-size: 1.8rem; margin-top: 0.25rem; color: var(--text-primary);">Dveep's Special 25-Year Index Backtest Calculator</h2>
-            <p style="color: var(--text-secondary); max-width: 680px; margin-top: 0.5rem;">
-              Backtest actual historical data across <strong>Nifty 50, Nifty Next 50, Nifty Midcap 150, Nifty Smallcap 250, Nifty 500, and Physical Gold (2000–2025)</strong> for SIPs & Lumpsums.
+            <span class="badge-tag" style="margin-bottom: 0.5rem;">FLAGSHIP DRAWDOWN ENGINE</span>
+            <h2 style="font-size: 1.85rem; margin-top: 0.25rem; color: var(--text-primary);">Dveep's Special 25-Year Market Crash & Recovery Calculator</h2>
+            <p style="color: var(--text-secondary); max-width: 700px; margin-top: 0.5rem; font-size: 0.95rem;">
+              Simulate exact client outcomes across the <strong>2020 COVID Crash, 2008 Lehman Crisis, and 2018 Midcap Bear Market</strong>. Prove with real numbers why continuing an SIP during market drops creates multi-fold exponential wealth!
             </p>
           </div>
           <div>
-            <a href="calculators/dveep-special.html" class="btn btn-primary">
-              Open Backtester →
+            <a href="calculators/dveep-special.html" class="btn btn-primary" style="padding: 0.85rem 1.75rem; font-size: 1rem;">
+              Launch Simulator →
             </a>
           </div>
         </div>
 
-        <div class="grid-4" style="margin-top: 1rem;">
+        <div class="grid-4" style="margin-top: 1.5rem;">
           <div class="stat-box">
-            <div class="stat-label">25-Year Nifty 50 CAGR</div>
+            <div class="stat-label">Nifty 50 TRI CAGR</div>
             <div class="stat-value green">14.1%</div>
           </div>
           <div class="stat-box">
@@ -84,91 +180,91 @@
             <div class="stat-value purple">18.2%</div>
           </div>
           <div class="stat-box">
-            <div class="stat-label">Gold 25-Year CAGR</div>
+            <div class="stat-label">Physical Gold CAGR</div>
             <div class="stat-value gold">12.2%</div>
           </div>
           <div class="stat-box">
-            <div class="stat-label">Supported Indices</div>
-            <div class="stat-value" style="color: var(--purple-primary);">5 + Gold</div>
+            <div class="stat-label">Market Crash Recovery</div>
+            <div class="stat-value purple">V-Shape</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Calculator Suite Grid -->
+    <!-- Comprehensive Calculator Suite Grid -->
     <section style="margin-bottom: 4rem;">
       <div style="text-align: center; margin-bottom: 2.5rem;">
-        <h2 style="font-size: 2.1rem;">Comprehensive Financial Planning Suite</h2>
-        <p style="color: var(--text-secondary); margin-top: 0.5rem;">Interactive advisory tools to answer every client question during consultation.</p>
+        <h2 style="font-size: 2.1rem; color: var(--text-primary);">Financial Planning & Wealth Calculators</h2>
+        <p style="color: var(--text-secondary); margin-top: 0.5rem;">Comprehensive client-ready calculation suite built for in-person advisory.</p>
       </div>
 
       <div class="grid-3">
-        <a href="calculators/sip.html" class="card">
-          <div style="font-size: 2rem; margin-bottom: 0.75rem;">📈</div>
+        <a href="calculators/sip.html" class="card tilt-card">
+          <div style="font-size: 2.2rem; margin-bottom: 0.75rem;">📈</div>
           <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary);">SIP Calculator</h3>
-          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Calculate compounded future wealth from monthly systematic investments.</p>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Calculate compounded future wealth from monthly systematic investments with inflation goals.</p>
           <span style="color: var(--purple-primary); font-weight: 700; font-size: 0.85rem;">Calculate SIP →</span>
         </a>
 
-        <a href="calculators/step-up-sip.html" class="card">
-          <div style="font-size: 2rem; margin-bottom: 0.75rem;">🚀</div>
+        <a href="calculators/step-up-sip.html" class="card tilt-card">
+          <div style="font-size: 2.2rem; margin-bottom: 0.75rem;">🚀</div>
           <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary);">Step-Up SIP Calculator</h3>
-          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Model annual salary increments (e.g. 10% step-up each year) to reach massive goals.</p>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Model annual salary increments (10% step-up each year) to double your wealth accumulation.</p>
           <span style="color: var(--purple-primary); font-weight: 700; font-size: 0.85rem;">Plan Step-Up →</span>
         </a>
 
-        <a href="calculators/lumpsum.html" class="card">
-          <div style="font-size: 2rem; margin-bottom: 0.75rem;">💰</div>
+        <a href="calculators/lumpsum.html" class="card tilt-card">
+          <div style="font-size: 2.2rem; margin-bottom: 0.75rem;">💰</div>
           <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary);">Lumpsum Calculator</h3>
-          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Project the long-term compounding growth of one-time bonus or surplus investments.</p>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Project long-term compounding growth on one-time surplus or bonus investments.</p>
           <span style="color: var(--purple-primary); font-weight: 700; font-size: 0.85rem;">Calculate Lumpsum →</span>
         </a>
 
-        <a href="calculators/swp.html" class="card">
-          <div style="font-size: 2rem; margin-bottom: 0.75rem;">🏖️</div>
-          <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary);">SWP Cashflow (Pension)</h3>
-          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Design tax-efficient regular monthly payouts during retirement.</p>
+        <a href="calculators/swp.html" class="card tilt-card">
+          <div style="font-size: 2.2rem; margin-bottom: 0.75rem;">🏖️</div>
+          <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary);">SWP Retirement Cashflow</h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Structure tax-efficient regular monthly payouts during retirement while corpus keeps growing.</p>
           <span style="color: var(--purple-primary); font-weight: 700; font-size: 0.85rem;">Structure SWP →</span>
         </a>
 
-        <a href="calculators/goal-planner.html" class="card">
-          <div style="font-size: 2rem; margin-bottom: 0.75rem;">🎯</div>
+        <a href="calculators/goal-planner.html" class="card tilt-card">
+          <div style="font-size: 2.2rem; margin-bottom: 0.75rem;">🎯</div>
           <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary);">Target Goal Planner</h3>
-          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Calculate exact monthly SIP required to reach custom milestones.</p>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Reverse engineer exact monthly SIP needed for Dream Home, Wedding, or Foreign Travel.</p>
           <span style="color: var(--purple-primary); font-weight: 700; font-size: 0.85rem;">Set Target Goal →</span>
         </a>
 
-        <a href="calculators/retirement.html" class="card">
-          <div style="font-size: 2rem; margin-bottom: 0.75rem;">🛡️</div>
-          <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary);">Retirement Planner</h3>
-          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Determine the exact nest egg needed accounting for 6% inflation.</p>
+        <a href="calculators/retirement.html" class="card tilt-card">
+          <div style="font-size: 2.2rem; margin-bottom: 0.75rem;">🛡️</div>
+          <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary);">Retirement Corpus Planner</h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Determine exact nest egg required accounting for 6-7% living expense inflation.</p>
           <span style="color: var(--purple-primary); font-weight: 700; font-size: 0.85rem;">Plan Retirement →</span>
         </a>
 
-        <a href="calculators/education.html" class="card">
-          <div style="font-size: 2rem; margin-bottom: 0.75rem;">🎓</div>
+        <a href="calculators/education.html" class="card tilt-card">
+          <div style="font-size: 2.2rem; margin-bottom: 0.75rem;">🎓</div>
           <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary);">Child Education Planner</h3>
-          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Account for 10% hyper-inflation in overseas & top Indian universities.</p>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Account for 10% hyper-inflation in overseas & top Indian university tuition fees.</p>
           <span style="color: var(--purple-primary); font-weight: 700; font-size: 0.85rem;">Calculate Education Fund →</span>
         </a>
 
-        <a href="calculators/elss.html" class="card">
-          <div style="font-size: 2rem; margin-bottom: 0.75rem;">⚖️</div>
+        <a href="calculators/elss.html" class="card tilt-card">
+          <div style="font-size: 2.2rem; margin-bottom: 0.75rem;">⚖️</div>
           <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary);">ELSS vs PPF Tax Saver</h3>
-          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Compare 3-year lock-in ELSS mutual funds with traditional PPF.</p>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Compare 3-year lock-in ELSS mutual funds with traditional 15-year fixed debt.</p>
           <span style="color: var(--purple-primary); font-weight: 700; font-size: 0.85rem;">Compare Tax Savers →</span>
         </a>
 
-        <a href="calculators/inflation.html" class="card">
-          <div style="font-size: 2rem; margin-bottom: 0.75rem;">⏳</div>
+        <a href="calculators/inflation.html" class="card tilt-card">
+          <div style="font-size: 2.2rem; margin-bottom: 0.75rem;">⏳</div>
           <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary);">Cost of Delay Calculator</h3>
-          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Show why delaying a SIP by 3 years costs over ₹50 Lakhs in future wealth.</p>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Show why delaying a SIP by just 3 years costs over ₹50 Lakhs in future wealth.</p>
           <span style="color: var(--purple-primary); font-weight: 700; font-size: 0.85rem;">Analyze Cost of Delay →</span>
         </a>
       </div>
     </section>
 
-    <!-- 20 Question Banner -->
+    <!-- 20 Question Client Health Check Banner -->
     <section class="card" style="background: linear-gradient(135deg, #FAF8FD, #F3EEFB); border: 2px solid #E4DAF8; margin-bottom: 4rem;">
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
         <div>
@@ -179,7 +275,7 @@
           </p>
         </div>
         <div>
-          <a href="client-discovery.html" class="btn btn-primary" style="font-size: 1.05rem;">
+          <a href="client-discovery.html" class="btn btn-primary" style="font-size: 1.05rem; padding: 0.85rem 1.75rem;">
             Start 20-Q Assessment →
           </a>
         </div>
@@ -207,5 +303,142 @@
   </footer>
 
   <script src="js/main.js"></script>
+
+  <!-- =========================================================================
+       Three.js 3D Floating Geometry & Particle Field Animation
+       ========================================================================= -->
+  <script>
+    (function init3DScene() {
+      const container = document.getElementById('three-canvas-container');
+      const wrapper = document.getElementById('hero3dSection');
+      if (!container || !wrapper || typeof THREE === 'undefined') return;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(60, wrapper.clientWidth / wrapper.clientHeight, 0.1, 1000);
+      camera.position.z = 24;
+
+      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer.setSize(wrapper.clientWidth, wrapper.clientHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      container.appendChild(renderer.domElement);
+
+      // 1. Interactive Floating 3D Geometric Wealth Nodes (Icosahedrons & Torus Knots)
+      const geometries = [
+        new THREE.IcosahedronGeometry(2.2, 0),
+        new THREE.TorusGeometry(2.5, 0.6, 16, 100),
+        new THREE.OctahedronGeometry(1.8, 0),
+        new THREE.TetrahedronGeometry(1.6, 0),
+        new THREE.IcosahedronGeometry(1.4, 0)
+      ];
+
+      const materials = [
+        new THREE.MeshStandardMaterial({ color: 0x9333EA, roughness: 0.2, metalness: 0.85, wireframe: true }),
+        new THREE.MeshStandardMaterial({ color: 0xC084FC, roughness: 0.3, metalness: 0.7, wireframe: false, transparent: true, opacity: 0.65 }),
+        new THREE.MeshStandardMaterial({ color: 0x38BDF8, roughness: 0.1, metalness: 0.9, wireframe: true }),
+        new THREE.MeshStandardMaterial({ color: 0x4ADE80, roughness: 0.2, metalness: 0.8, wireframe: false, transparent: true, opacity: 0.5 }),
+        new THREE.MeshStandardMaterial({ color: 0xFDE047, roughness: 0.3, metalness: 0.6, wireframe: true })
+      ];
+
+      const meshList = [];
+      const positions = [
+        { x: -14, y: 5, z: -4 },
+        { x: 15, y: -4, z: -6 },
+        { x: -12, y: -6, z: -2 },
+        { x: 13, y: 6, z: -3 },
+        { x: 0, y: 10, z: -8 }
+      ];
+
+      for (let i = 0; i < geometries.length; i++) {
+        const mesh = new THREE.Mesh(geometries[i], materials[i]);
+        mesh.position.set(positions[i].x, positions[i].y, positions[i].z);
+        mesh.rotationSpeed = {
+          x: (Math.random() - 0.5) * 0.015,
+          y: (Math.random() - 0.5) * 0.015,
+          z: (Math.random() - 0.5) * 0.01
+        };
+        scene.add(mesh);
+        meshList.push(mesh);
+      }
+
+      // 2. 3D Floating Particle Network (750 Glowing Stardust Particles)
+      const particleCount = 750;
+      const particleGeo = new THREE.BufferGeometry();
+      const particlePositions = new Float32Array(particleCount * 3);
+
+      for (let i = 0; i < particleCount * 3; i += 3) {
+        particlePositions[i] = (Math.random() - 0.5) * 55;
+        particlePositions[i + 1] = (Math.random() - 0.5) * 35;
+        particlePositions[i + 2] = (Math.random() - 0.5) * 30;
+      }
+
+      particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+      const particleMat = new THREE.PointsMaterial({
+        size: 0.18,
+        color: 0xE9D5FF,
+        transparent: true,
+        opacity: 0.75,
+        blending: THREE.AdditiveBlending
+      });
+      const particleSystem = new THREE.Points(particleGeo, particleMat);
+      scene.add(particleSystem);
+
+      // 3. Dynamic Scene Lighting
+      const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.9);
+      scene.add(ambientLight);
+
+      const purpleLight = new THREE.PointLight(0x9333EA, 2.5, 50);
+      purpleLight.position.set(10, 10, 10);
+      scene.add(purpleLight);
+
+      const cyanLight = new THREE.PointLight(0x38BDF8, 2, 50);
+      cyanLight.position.set(-10, -10, 10);
+      scene.add(cyanLight);
+
+      // Mouse Parallax Effect
+      let mouseX = 0, mouseY = 0;
+      let targetX = 0, targetY = 0;
+
+      window.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+        mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+      });
+
+      // 4. Smooth Animation Loop
+      let clock = new THREE.Clock();
+      function animate() {
+        requestAnimationFrame(animate);
+        const elapsedTime = clock.getElapsedTime();
+
+        // Rotate Wealth Node Geometries
+        meshList.forEach((m, idx) => {
+          m.rotation.x += m.rotationSpeed.x;
+          m.rotation.y += m.rotationSpeed.y;
+          m.position.y += Math.sin(elapsedTime * 1.5 + idx) * 0.015;
+        });
+
+        // Rotate Particle Field
+        particleSystem.rotation.y = elapsedTime * 0.04;
+        particleSystem.rotation.x = elapsedTime * 0.02;
+
+        // Smooth Camera Follow
+        targetX = mouseX * 2.5;
+        targetY = -mouseY * 2.5;
+        camera.position.x += (targetX - camera.position.x) * 0.05;
+        camera.position.y += (targetY - camera.position.y) * 0.05;
+        camera.lookAt(scene.position);
+
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      // Responsive Resize
+      window.addEventListener('resize', () => {
+        if (!wrapper) return;
+        camera.aspect = wrapper.clientWidth / wrapper.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(wrapper.clientWidth, wrapper.clientHeight);
+      });
+    })();
+  </script>
 </body>
 </html>
