@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step-Up SIP Calculator | NiveshGhar Advisory</title>
+  <link rel="stylesheet" href="../styles/main.css"><script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <nav class="navbar"><div class="nav-container"><a href="../index.html" class="logo"><span style="color:var(--accent-emerald);">◆</span> Nivesh<span style="color:var(--accent-gold);">Ghar</span></a><ul class="nav-links"><li><a href="../index.html" class="nav-link">Home</a></li><li><a href="dveep-special.html" class="nav-link" style="color:var(--accent-gold);">★ Dveep's Special</a></li><li><a href="step-up-sip.html" class="nav-link active">Step-Up SIP</a></li></ul><button class="btn btn-primary" onclick="openWhatsApp()">Book Consultation</button></div></nav>
+  <main class="main-wrapper">
+    <h1 style="font-size: 2.2rem;">Step-Up SIP Calculator</h1>
+    <div class="grid-2" style="margin-top:1.5rem; gap:2rem; align-items:flex-start;">
+      <div class="card">
+        <div class="form-group"><div class="form-label"><span>Initial Monthly SIP (₹)</span><span class="val-badge" id="stepSIPBadge">₹10,000</span></div><input type="range" class="range-slider" id="stepSIP" min="1000" max="200000" step="1000" value="10000" oninput="runStepUp()"></div>
+        <div class="form-group"><div class="form-label"><span>Annual Step-Up (%)</span><span class="val-badge" id="stepPctBadge">10%</span></div><input type="range" class="range-slider" id="stepPct" min="1" max="25" step="1" value="10" oninput="runStepUp()"></div>
+        <div class="form-group"><div class="form-label"><span>Expected Return Rate (%)</span><span class="val-badge" id="stepRateBadge">12%</span></div><input type="range" class="range-slider" id="stepRate" min="4" max="20" step="0.5" value="12" oninput="runStepUp()"></div>
+        <div class="form-group"><div class="form-label"><span>Period (Years)</span><span class="val-badge" id="stepYrsBadge">15 Years</span></div><input type="range" class="range-slider" id="stepYrs" min="1" max="30" step="1" value="15" oninput="runStepUp()"></div>
+        <button class="btn btn-gold" style="width:100%;" onclick="openWhatsApp('Hi Dveep Sir, I want to structure a Step-Up SIP.')">Start Step-Up with Dveep</button>
+      </div>
+      <div class="card">
+        <div class="grid-3" style="gap:1rem; margin-bottom:1.5rem;">
+          <div class="stat-box"><div class="stat-label">Invested</div><div class="stat-value" id="resBox1">₹38.12 L</div></div>
+          <div class="stat-box"><div class="stat-label">Returns</div><div class="stat-value emerald" id="resBox2">₹52.88 L</div></div>
+          <div class="stat-box"><div class="stat-label">Total Corpus</div><div class="stat-value gold" id="resBox3">₹91.00 L</div></div>
+        </div>
+        <div style="height:240px;"><canvas id="calcGenChart"></canvas></div>
+      </div>
+    </div>
+  </main>
+  <script src="../js/calculators.js"></script><script src="../js/main.js"></script>
+  <script>
+    let stepChart = null;
+    function runStepUp() {
+      const sip = parseFloat(document.getElementById('stepSIP').value);
+      const step = parseFloat(document.getElementById('stepPct').value);
+      const r = parseFloat(document.getElementById('stepRate').value);
+      const y = parseFloat(document.getElementById('stepYrs').value);
+      document.getElementById('stepSIPBadge').textContent = formatINR(sip, false);
+      document.getElementById('stepPctBadge').textContent = step + '%';
+      document.getElementById('stepRateBadge').textContent = r + '%';
+      document.getElementById('stepYrsBadge').textContent = y + ' Years';
+      const res = calculateStepUpSIP(sip, step, r, y);
+      document.getElementById('resBox1').textContent = formatINR(res.invested);
+      document.getElementById('resBox2').textContent = formatINR(res.returns);
+      document.getElementById('resBox3').textContent = formatINR(res.total);
+      const ctx = document.getElementById('calcGenChart').getContext('2d');
+      if (stepChart) stepChart.destroy();
+      stepChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: res.breakdown.map(b => 'Yr ' + b.year),
+          datasets: [
+            { label: 'Total Corpus (₹)', data: res.breakdown.map(b => b.corpus), borderColor: '#00D293', backgroundColor: 'rgba(0,210,147,0.15)', fill: true },
+            { label: 'Invested Capital (₹)', data: res.breakdown.map(b => b.investedToDate), borderColor: '#3B82F6', fill: false }
+          ]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#94A3B8' } } }, scales: { x: { ticks: { color: '#94A3B8' } }, y: { ticks: { color: '#94A3B8', callback: v => formatINR(v) } } } }
+      });
+    }
+    document.addEventListener('DOMContentLoaded', runStepUp);
+  </script>
+</body>
+</html>
