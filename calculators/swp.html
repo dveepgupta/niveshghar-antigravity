@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SWP Cash Flow Calculator | NiveshGhar Advisory</title>
+  <link rel="stylesheet" href="../styles/main.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="logo">
+        <span style="color: var(--accent-emerald);">◆</span> Nivesh<span style="color: var(--accent-gold);">Ghar</span>
+        <span class="logo-badge">Wealth Advisory</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="../index.html" class="nav-link">Home</a></li>
+        <li><a href="dveep-special.html" class="nav-link" style="color: var(--accent-gold);">★ Dveep's Special</a></li>
+        <li><a href="sip.html" class="nav-link">SIP</a></li>
+        <li><a href="swp.html" class="nav-link active">SWP</a></li>
+        <li><a href="goal-planner.html" class="nav-link">Goal Planner</a></li>
+        <li><a href="../client-discovery.html" class="nav-link">20-Q Health Check</a></li>
+      </ul>
+      <div class="nav-cta">
+        <button class="btn btn-primary" onclick="openWhatsApp('Hi Dveep Sir, I want to book a wealth planning consultation')">
+          <span>Book Consultation</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main-wrapper">
+    <div style="margin-bottom: 2rem;">
+      <span class="badge-tag">RETIREMENT PENSION ENGINE</span>
+      <h1 style="font-size: 2.2rem; margin-top: 0.5rem;">Systematic Withdrawal Plan (SWP) Calculator</h1>
+      <p style="color: var(--text-secondary);">Structure a predictable monthly income during retirement with high tax efficiency.</p>
+    </div>
+
+    <div class="grid-2" style="gap: 2rem; align-items: flex-start;">
+      <div class="card">
+        <h2 style="font-size: 1.3rem; margin-bottom: 1.5rem;">SWP Parameters</h2>
+        <div class="form-group">
+          <div class="form-label"><span>Total Retirement Corpus</span><span class="val-badge" id="corpBadge">₹1,00,00,000</span></div>
+          <input type="range" class="range-slider" id="corpus" min="500000" max="50000000" step="500000" value="10000000" oninput="calcSWP()">
+        </div>
+        <div class="form-group">
+          <div class="form-label"><span>Monthly Withdrawal Amount</span><span class="val-badge" id="withBadge">₹60,000</span></div>
+          <input type="range" class="range-slider" id="withdrawal" min="5000" max="500000" step="5000" value="60000" oninput="calcSWP()">
+        </div>
+        <div class="form-group">
+          <div class="form-label"><span>Expected Portfolio Return (p.a %)</span><span class="val-badge" id="rateBadge">8.5%</span></div>
+          <input type="range" class="range-slider" id="returnRate" min="5" max="15" step="0.5" value="8.5" oninput="calcSWP()">
+        </div>
+        <div class="form-group">
+          <div class="form-label"><span>Withdrawal Duration (Years)</span><span class="val-badge" id="yearsBadge">20 Years</span></div>
+          <input type="range" class="range-slider" id="years" min="5" max="35" step="1" value="20" oninput="calcSWP()">
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 style="font-size: 1.3rem; margin-bottom: 1rem;">SWP Summary</h2>
+        <div class="grid-3" style="gap: 1rem; margin-bottom: 1.5rem;">
+          <div class="stat-box"><div class="stat-label">Initial Corpus</div><div class="stat-value" id="initVal">₹1.00 Cr</div></div>
+          <div class="stat-box"><div class="stat-label">Total Withdrawn</div><div class="stat-value emerald" id="withTotal">₹1.44 Cr</div></div>
+          <div class="stat-box"><div class="stat-label">Remaining Balance</div><div class="stat-value gold" id="finalBal">₹1.18 Cr</div></div>
+        </div>
+        <div style="position: relative; height: 260px; width: 100%;">
+          <canvas id="swpChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../js/calculators.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    let swpChartInstance = null;
+    function calcSWP() {
+      const corpus = parseFloat(document.getElementById('corpus').value);
+      const withdrawal = parseFloat(document.getElementById('withdrawal').value);
+      const rate = parseFloat(document.getElementById('returnRate').value);
+      const yrs = parseFloat(document.getElementById('years').value);
+
+      document.getElementById('corpBadge').textContent = formatINR(corpus, false);
+      document.getElementById('withBadge').textContent = formatINR(withdrawal, false);
+      document.getElementById('rateBadge').textContent = rate + '%';
+      document.getElementById('yearsBadge').textContent = yrs + ' Years';
+
+      const res = calculateSWP(corpus, withdrawal, rate, yrs);
+      document.getElementById('initVal').textContent = formatINR(res.initialCorpus);
+      document.getElementById('withTotal').textContent = formatINR(res.totalWithdrawn);
+      document.getElementById('finalBal').textContent = formatINR(res.finalBalance);
+
+      const ctx = document.getElementById('swpChart').getContext('2d');
+      if (swpChartInstance) swpChartInstance.destroy();
+
+      swpChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: res.yearlySchedule.map(s => 'Yr ' + s.year),
+          datasets: [{
+            label: 'Remaining Portfolio Balance (₹)',
+            data: res.yearlySchedule.map(s => s.balance),
+            borderColor: '#00D293',
+            backgroundColor: 'rgba(0,210,147,0.1)',
+            fill: true,
+            tension: 0.3
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { labels: { color: '#94A3B8' } } },
+          scales: {
+            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94A3B8' } },
+            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94A3B8', callback: v => formatINR(v) } }
+          }
+        }
+      });
+    }
+    document.addEventListener('DOMContentLoaded', calcSWP);
+  </script>
+</body>
+</html>
