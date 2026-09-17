@@ -1,36 +1,6 @@
-// Theme Management Engine
-function applySavedTheme() {
-  const saved = localStorage.getItem('niveshghar_theme') || 'blue';
-  document.body.className = 'theme-' + saved;
-  const selector = document.getElementById('themeSelect');
-  if (selector) selector.value = saved;
-}
-
-function switchTheme(themeName) {
-  document.body.className = 'theme-' + themeName;
-  localStorage.setItem('niveshghar_theme', themeName);
-  const selector = document.getElementById('themeSelect');
-  if (selector) selector.value = themeName;
-}
-
+// NiveshGhar Global Client Advisory Scripts
 document.addEventListener('DOMContentLoaded', () => {
-  applySavedTheme();
-
-  // If a theme switcher doesn't exist in nav-cta, inject it
-  const navCta = document.querySelector('.nav-cta');
-  if (navCta && !document.getElementById('themeSelect')) {
-    const select = document.createElement('select');
-    select.className = 'theme-selector';
-    select.id = 'themeSelect';
-    select.innerHTML = `
-      <option value="blue">🔷 Professional Dark (Blue)</option>
-      <option value="green">🌿 Growth & Prosperity (Green)</option>
-      <option value="purple">🔮 Innovation & Vision (Purple)</option>
-    `;
-    select.value = localStorage.getItem('niveshghar_theme') || 'blue';
-    select.onchange = (e) => switchTheme(e.target.value);
-    navCta.insertBefore(select, navCta.firstChild);
-  }
+  console.log('NiveshGhar Advisory Portal loaded');
 });
 
 function openWhatsApp(customMsg) {
