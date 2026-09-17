@@ -1,6 +1,6 @@
-// Theme Engine & Persistence
+// Theme Management Engine
 function applySavedTheme() {
-  const saved = localStorage.getItem('niveshghar_theme') || 'royal';
+  const saved = localStorage.getItem('niveshghar_theme') || 'blue';
   document.body.className = 'theme-' + saved;
   const selector = document.getElementById('themeSelect');
   if (selector) selector.value = saved;
@@ -23,12 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
     select.className = 'theme-selector';
     select.id = 'themeSelect';
     select.innerHTML = `
-      <option value="royal">💎 Royal Dark</option>
-      <option value="light">☀️ Clean Light</option>
-      <option value="forest">🌲 Forest Growth</option>
-      <option value="cyan">⚡ Titanium Cyan</option>
+      <option value="blue">🔷 Professional Dark (Blue)</option>
+      <option value="green">🌿 Growth & Prosperity (Green)</option>
+      <option value="purple">🔮 Innovation & Vision (Purple)</option>
     `;
-    select.value = localStorage.getItem('niveshghar_theme') || 'royal';
+    select.value = localStorage.getItem('niveshghar_theme') || 'blue';
     select.onchange = (e) => switchTheme(e.target.value);
     navCta.insertBefore(select, navCta.firstChild);
   }
