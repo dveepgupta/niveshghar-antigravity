@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Target Goal Planner | NiveshGhar Advisory</title>
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="logo">
+        <span style="color: var(--accent-emerald);">◆</span> Nivesh<span style="color: var(--accent-gold);">Ghar</span>
+        <span class="logo-badge">Wealth Advisory</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="../index.html" class="nav-link">Home</a></li>
+        <li><a href="dveep-special.html" class="nav-link" style="color: var(--accent-gold);">★ Dveep's Special</a></li>
+        <li><a href="sip.html" class="nav-link">SIP</a></li>
+        <li><a href="swp.html" class="nav-link">SWP</a></li>
+        <li><a href="goal-planner.html" class="nav-link active">Goal Planner</a></li>
+      </ul>
+      <div class="nav-cta">
+        <button class="btn btn-primary" onclick="openWhatsApp('Hi Dveep Sir, I want to book a wealth planning consultation')">
+          <span>Book Consultation</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main-wrapper">
+    <div style="margin-bottom: 2rem;">
+      <span class="badge-tag">REVERSE TARGET ENGINEERING</span>
+      <h1 style="font-size: 2.2rem; margin-top: 0.5rem;">Target Goal SIP Planner</h1>
+      <p style="color: var(--text-secondary);">Find the exact monthly SIP required to achieve your dream milestones.</p>
+    </div>
+
+    <div class="grid-2" style="gap: 2rem; align-items: flex-start;">
+      <div class="card">
+        <h2 style="font-size: 1.3rem; margin-bottom: 1.5rem;">Goal Details</h2>
+        <div class="form-group">
+          <label class="form-label">Select Goal Type</label>
+          <select id="goalType" class="form-input" onchange="setGoalPreset()">
+            <option value="house">🏡 Dream Home (₹1.50 Cr in 10 Yrs)</option>
+            <option value="edu">🎓 Child Overseas Education (₹75 Lakhs in 8 Yrs)</option>
+            <option value="retire">🏖️ Financial Freedom (₹3.00 Cr in 15 Yrs)</option>
+            <option value="custom" selected>🎯 Custom Goal</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <div class="form-label"><span>Target Goal Amount (₹)</span><span class="val-badge" id="targetBadge">₹1,00,00,000</span></div>
+          <input type="range" class="range-slider" id="targetAmt" min="500000" max="50000000" step="500000" value="10000000" oninput="calcGoal()">
+        </div>
+        <div class="form-group">
+          <div class="form-label"><span>Time Horizon (Years)</span><span class="val-badge" id="timeBadge">10 Years</span></div>
+          <input type="range" class="range-slider" id="timeYears" min="1" max="30" step="1" value="10" oninput="calcGoal()">
+        </div>
+        <div class="form-group">
+          <div class="form-label"><span>Expected Return Rate (p.a %)</span><span class="val-badge" id="rateBadge">12%</span></div>
+          <input type="range" class="range-slider" id="returnRate" min="6" max="18" step="0.5" value="12" oninput="calcGoal()">
+        </div>
+      </div>
+
+      <div class="card" style="background: linear-gradient(135deg, rgba(18,32,53,0.9), rgba(0,210,147,0.15)); border-color: rgba(0,210,147,0.3);">
+        <h2 style="font-size: 1.3rem; margin-bottom: 1.5rem;">Required Action Plan</h2>
+        <div style="text-align: center; padding: 2rem 1rem;">
+          <div style="font-size: 0.9rem; color: var(--text-secondary); text-transform: uppercase;">Required Monthly SIP</div>
+          <div style="font-size: 3rem; font-weight: 800; font-family: Outfit; color: var(--accent-emerald); margin: 0.5rem 0;" id="reqSIP">₹43,040</div>
+          <p style="color: var(--text-secondary); font-size: 0.95rem; max-width: 400px; margin: 0 auto;">
+            Investing this amount monthly at <strong id="rateLabel">12%</strong> will compound to your <strong id="targetLabel">₹1.00 Cr</strong> goal in <strong id="yearsLabel">10 years</strong>.
+          </p>
+        </div>
+        <button class="btn btn-primary" style="width: 100%; padding: 0.9rem;" onclick="openWhatsApp('Hi Dveep Sir, I need a roadmap for my goal of ' + document.getElementById('targetBadge').textContent + ' in ' + document.getElementById('timeBadge').textContent)">
+          Start Goal Execution with Dveep
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <script src="../js/calculators.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    function setGoalPreset() {
+      const type = document.getElementById('goalType').value;
+      if (type === 'house') { document.getElementById('targetAmt').value = 15000000; document.getElementById('timeYears').value = 10; }
+      else if (type === 'edu') { document.getElementById('targetAmt').value = 7500000; document.getElementById('timeYears').value = 8; }
+      else if (type === 'retire') { document.getElementById('targetAmt').value = 30000000; document.getElementById('timeYears').value = 15; }
+      calcGoal();
+    }
+    function calcGoal() {
+      const target = parseFloat(document.getElementById('targetAmt').value);
+      const yrs = parseFloat(document.getElementById('timeYears').value);
+      const rate = parseFloat(document.getElementById('returnRate').value);
+
+      document.getElementById('targetBadge').textContent = formatINR(target, false);
+      document.getElementById('timeBadge').textContent = yrs + ' Years';
+      document.getElementById('rateBadge').textContent = rate + '%';
+
+      const required = calculateRequiredSIP(target, rate, yrs);
+      document.getElementById('reqSIP').textContent = formatINR(required, false);
+      document.getElementById('rateLabel').textContent = rate + '%';
+      document.getElementById('targetLabel').textContent = formatINR(target);
+      document.getElementById('yearsLabel').textContent = yrs + ' years';
+    }
+    document.addEventListener('DOMContentLoaded', calcGoal);
+  </script>
+</body>
+</html>
