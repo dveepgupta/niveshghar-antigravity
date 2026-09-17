@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Theme Studio & Visual Palettes | NiveshGhar</title>
+  <link rel="stylesheet" href="styles/main.css">
+  <style>
+    .theme-card-preview {
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+    .theme-card-preview:hover, .theme-card-preview.active {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+    }
+    .theme-card-preview.active {
+      border-color: var(--accent-emerald);
+    }
+    .color-pill {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      margin-right: 6px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <span style="color: var(--accent-emerald);">◆</span> Nivesh<span style="color: var(--accent-gold);">Ghar</span>
+        <span class="logo-badge">Theme Studio</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="calculators/dveep-special.html" class="nav-link" style="color: var(--accent-gold);">★ Dveep's Special</a></li>
+        <li><a href="themes.html" class="nav-link active">🎨 Color Themes</a></li>
+      </ul>
+      <div class="nav-cta">
+        <select class="theme-selector" id="themeSelect" onchange="switchTheme(this.value)">
+          <option value="royal">💎 Royal Sapphire & Gold</option>
+          <option value="light">☀️ Executive Slate & White</option>
+          <option value="forest">🌲 Forest Emerald & Gold</option>
+          <option value="cyan">⚡ Titanium & Electric Cyan</option>
+        </select>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main-wrapper">
+    <div style="text-align: center; margin-bottom: 3rem;">
+      <span class="badge-tag">COLOR PALETTE STUDIO</span>
+      <h1 style="font-size: 2.6rem; margin-top: 0.5rem;">Choose Your Advisory Color Scheme</h1>
+      <p style="color: var(--text-secondary); max-width: 680px; margin: 0 auto;">
+        Click any theme card below to preview the color palette and apply it instantly across all calculators and pages.
+      </p>
+    </div>
+
+    <!-- 4 Theme Preview Grid -->
+    <div class="grid-2" style="gap: 2rem; margin-bottom: 3rem;">
+      
+      <!-- Option 1: Royal Sapphire & Gold (Current) -->
+      <div class="theme-card-preview card" style="background: #070D18; color: #F8FAFC; border: 1px solid rgba(245,166,35,0.4);" onclick="switchTheme('royal')">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <h3 style="font-size: 1.3rem; color: #F5A623;">1. Royal Sapphire & Gold (Luxury Dark)</h3>
+          <span class="badge-tag" style="background: rgba(245,166,35,0.2); color: #F5A623;">Default</span>
+        </div>
+        <p style="color: #94A3B8; font-size: 0.88rem; margin-bottom: 1.25rem;">
+          Private banking & wealth management aesthetic with deep midnight sapphire background, champagne gold highlights, and emerald gain metrics.
+        </p>
+        <div style="margin-bottom: 1.25rem;">
+          <span class="color-pill" style="background: #070D18;" title="Base Sapphire"></span>
+          <span class="color-pill" style="background: #122035;" title="Card Navy"></span>
+          <span class="color-pill" style="background: #F5A623;" title="Champagne Gold"></span>
+          <span class="color-pill" style="background: #00D293;" title="Emerald Green"></span>
+        </div>
+        <!-- Mock UI Element -->
+        <div style="background: rgba(18,32,53,0.9); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 1rem; margin-bottom: 1rem;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #94A3B8;">
+            <span>Sample SIP Maturity:</span>
+            <strong style="color: #00D293; font-size: 1.1rem;">₹50.46 Lakhs</strong>
+          </div>
+        </div>
+        <button class="btn btn-gold" style="width: 100%;">Apply Royal Sapphire Theme</button>
+      </div>
+
+      <!-- Option 2: Executive Slate & Pure White (Light Mode) -->
+      <div class="theme-card-preview card" style="background: #FFFFFF; color: #0F172A; border: 1px solid #E2E8F0;" onclick="switchTheme('light')">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <h3 style="font-size: 1.3rem; color: #1D4ED8;">2. Executive Slate & Navy (Corporate Light)</h3>
+          <span class="badge-tag" style="background: rgba(29,78,216,0.1); color: #1D4ED8;">High Contrast</span>
+        </div>
+        <p style="color: #475569; font-size: 0.88rem; margin-bottom: 1.25rem;">
+          Crisp institutional look like Vanguard/BlackRock. Clean pure white surface, deep corporate navy typography, and bright emerald action buttons.
+        </p>
+        <div style="margin-bottom: 1.25rem;">
+          <span class="color-pill" style="background: #FFFFFF;" title="Pure White"></span>
+          <span class="color-pill" style="background: #F1F5F9;" title="Soft Slate"></span>
+          <span class="color-pill" style="background: #1D4ED8;" title="Corporate Navy"></span>
+          <span class="color-pill" style="background: #059669;" title="Emerald Green"></span>
+        </div>
+        <!-- Mock UI Element -->
+        <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 1rem; margin-bottom: 1rem;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #475569;">
+            <span>Sample SIP Maturity:</span>
+            <strong style="color: #059669; font-size: 1.1rem;">₹50.46 Lakhs</strong>
+          </div>
+        </div>
+        <button class="btn btn-primary" style="width: 100%; background: #1D4ED8; color: #fff;">Apply Executive Light Theme</button>
+      </div>
+
+      <!-- Option 3: Forest Emerald & Sovereign Gold (Growth & Prosperity) -->
+      <div class="theme-card-preview card" style="background: #041812; color: #F0FDF4; border: 1px solid rgba(5,214,158,0.3);" onclick="switchTheme('forest')">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <h3 style="font-size: 1.3rem; color: #05D69E;">3. Forest Emerald & Gold (Wealth & Growth)</h3>
+          <span class="badge-tag" style="background: rgba(5,214,158,0.2); color: #05D69E;">Organic Growth</span>
+        </div>
+        <p style="color: #86EFAC; font-size: 0.88rem; margin-bottom: 1.25rem;">
+          Botanical dark green inspired by compounding, wealth generation, and financial stability, paired with sovereign golden accents.
+        </p>
+        <div style="margin-bottom: 1.25rem;">
+          <span class="color-pill" style="background: #041812;" title="Forest Dark"></span>
+          <span class="color-pill" style="background: #0A2E23;" title="Emerald Deep"></span>
+          <span class="color-pill" style="background: #05D69E;" title="Mint Emerald"></span>
+          <span class="color-pill" style="background: #FBBF24;" title="Sovereign Gold"></span>
+        </div>
+        <!-- Mock UI Element -->
+        <div style="background: rgba(10,46,35,0.9); border: 1px solid rgba(5,214,158,0.2); border-radius: 10px; padding: 1rem; margin-bottom: 1rem;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #86EFAC;">
+            <span>Sample SIP Maturity:</span>
+            <strong style="color: #FBBF24; font-size: 1.1rem;">₹50.46 Lakhs</strong>
+          </div>
+        </div>
+        <button class="btn btn-primary" style="width: 100%; background: #05D69E; color: #041812;">Apply Forest Growth Theme</button>
+      </div>
+
+      <!-- Option 4: Titanium Charcoal & Electric Cyan (Fintech Modern) -->
+      <div class="theme-card-preview card" style="background: #0A0D14; color: #F1F5F9; border: 1px solid rgba(0,240,255,0.3);" onclick="switchTheme('cyan')">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <h3 style="font-size: 1.3rem; color: #00F0FF;">4. Titanium & Electric Cyan (Fintech Modern)</h3>
+          <span class="badge-tag" style="background: rgba(0,240,255,0.2); color: #00F0FF;">Quant Terminal</span>
+        </div>
+        <p style="color: #94A3B8; font-size: 0.88rem; margin-bottom: 1.25rem;">
+          Minimalist dark charcoal terminal theme with high-tech glowing electric cyan charts and ultra-modern typography.
+        </p>
+        <div style="margin-bottom: 1.25rem;">
+          <span class="color-pill" style="background: #0A0D14;" title="Titanium Charcoal"></span>
+          <span class="color-pill" style="background: #121824;" title="Deep Space"></span>
+          <span class="color-pill" style="background: #00F0FF;" title="Electric Cyan"></span>
+          <span class="color-pill" style="background: #38BDF8;" title="Sky Blue"></span>
+        </div>
+        <!-- Mock UI Element -->
+        <div style="background: rgba(18,24,36,0.9); border: 1px solid rgba(0,240,255,0.2); border-radius: 10px; padding: 1rem; margin-bottom: 1rem;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #94A3B8;">
+            <span>Sample SIP Maturity:</span>
+            <strong style="color: #00F0FF; font-size: 1.1rem;">₹50.46 Lakhs</strong>
+          </div>
+        </div>
+        <button class="btn btn-primary" style="width: 100%; background: #00F0FF; color: #0A0D14;">Apply Titanium Cyan Theme</button>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <p>© 2026 <strong>NiveshGhar</strong>. Crafted for discerning investors by Dveep Wealth Advisory.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
