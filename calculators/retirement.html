@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retirement Corpus Planner | NiveshGhar Advisory</title>
+  <link rel="stylesheet" href="../styles/main.css"><script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <nav class="navbar"><div class="nav-container"><a href="../index.html" class="logo"><span style="color:var(--accent-emerald);">◆</span> Nivesh<span style="color:var(--accent-gold);">Ghar</span></a><ul class="nav-links"><li><a href="../index.html" class="nav-link">Home</a></li><li><a href="dveep-special.html" class="nav-link" style="color:var(--accent-gold);">★ Dveep's Special</a></li><li><a href="retirement.html" class="nav-link active">Retirement</a></li></ul><button class="btn btn-primary" onclick="openWhatsApp()">Book Consultation</button></div></nav>
+  <main class="main-wrapper">
+    <h1 style="font-size: 2.2rem;">Retirement Nest Egg & Pension Planner</h1>
+    <div class="grid-2" style="margin-top:1.5rem; gap:2rem; align-items:flex-start;">
+      <div class="card">
+        <div class="form-group"><div class="form-label"><span>Current Age</span><span class="val-badge" id="cAgeBadge">30 Years</span></div><input type="range" class="range-slider" id="cAge" min="20" max="60" value="30" oninput="runRet()"></div>
+        <div class="form-group"><div class="form-label"><span>Desired Retirement Age</span><span class="val-badge" id="rAgeBadge">55 Years</span></div><input type="range" class="range-slider" id="rAge" min="40" max="75" value="55" oninput="runRet()"></div>
+        <div class="form-group"><div class="form-label"><span>Monthly Living Expenses (₹)</span><span class="val-badge" id="mExpBadge">₹50,000</span></div><input type="range" class="range-slider" id="mExp" min="15000" max="500000" step="5000" value="50000" oninput="runRet()"></div>
+        <div class="form-group"><div class="form-label"><span>Inflation Rate (%)</span><span class="val-badge" id="infBadge">6.0%</span></div><input type="range" class="range-slider" id="infRate" min="4" max="9" step="0.5" value="6" oninput="runRet()"></div>
+        <button class="btn btn-gold" style="width:100%;" onclick="openWhatsApp('Hi Dveep Sir, I want a comprehensive retirement roadmap.')">Plan Retirement with Dveep</button>
+      </div>
+      <div class="card">
+        <div class="grid-3" style="gap:1rem; margin-bottom:1.5rem;">
+          <div class="stat-box"><div class="stat-label">Expense At Retire</div><div class="stat-value" id="resBox1">₹0</div></div>
+          <div class="stat-box"><div class="stat-label">Target Corpus</div><div class="stat-value gold" id="resBox2">₹0</div></div>
+          <div class="stat-box"><div class="stat-label">Required SIP</div><div class="stat-value emerald" id="resBox3">₹0</div></div>
+        </div>
+        <div style="height:240px;"><canvas id="calcGenChart"></canvas></div>
+      </div>
+    </div>
+  </main>
+  <script src="../js/calculators.js"></script><script src="../js/main.js"></script>
+  <script>
+    let retChart = null;
+    function runRet() {
+      const curAge = parseFloat(document.getElementById('cAge').value);
+      const retAge = parseFloat(document.getElementById('rAge').value);
+      const exp = parseFloat(document.getElementById('mExp').value);
+      const inf = parseFloat(document.getElementById('infRate').value);
+
+      document.getElementById('cAgeBadge').textContent = curAge + ' Years';
+      document.getElementById('rAgeBadge').textContent = retAge + ' Years';
+      document.getElementById('mExpBadge').textContent = formatINR(exp, false);
+      document.getElementById('infBadge').textContent = inf + '%';
+
+      const yrsToRetire = Math.max(1, retAge - curAge);
+      const futureMonthlyExp = exp * Math.pow(1 + (inf/100), yrsToRetire);
+      const annualExpAtRetire = futureMonthlyExp * 12;
+      const corpusNeeded = annualExpAtRetire * 25;
+      const reqSIP = calculateRequiredSIP(corpusNeeded, 12, yrsToRetire);
+
+      document.getElementById('resBox1').textContent = formatINR(futureMonthlyExp) + '/mo';
+      document.getElementById('resBox2').textContent = formatINR(corpusNeeded);
+      document.getElementById('resBox3').textContent = formatINR(reqSIP) + '/mo';
+
+      const ctx = document.getElementById('calcGenChart').getContext('2d');
+      if (retChart) retChart.destroy();
+      retChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Today Exp/Yr', 'At Retire Exp/Yr', 'Required Nest Egg (₹)'],
+          datasets: [{ label: 'Corpus Analysis', data: [exp*12, annualExpAtRetire, corpusNeeded], backgroundColor: ['#3B82F6', '#F5A623', '#00D293'] }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94A3B8' } }, y: { ticks: { color: '#94A3B8', callback: v => formatINR(v) } } } }
+      });
+    }
+    document.addEventListener('DOMContentLoaded', runRet);
+  </script>
+</body>
+</html>
