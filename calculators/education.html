@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Child Higher Education Planner | NiveshGhar</title>
+  <link rel="stylesheet" href="../styles/main.css"><script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <nav class="navbar"><div class="nav-container"><a href="../index.html" class="logo"><span style="color:var(--accent-emerald);">◆</span> Nivesh<span style="color:var(--accent-gold);">Ghar</span></a><ul class="nav-links"><li><a href="../index.html" class="nav-link">Home</a></li><li><a href="dveep-special.html" class="nav-link" style="color:var(--accent-gold);">★ Dveep's Special</a></li><li><a href="education.html" class="nav-link active">Education</a></li></ul><button class="btn btn-primary" onclick="openWhatsApp()">Book Consultation</button></div></nav>
+  <main class="main-wrapper">
+    <h1 style="font-size: 2.2rem;">Child Higher Education Corpus Planner</h1>
+    <div class="grid-2" style="margin-top:1.5rem; gap:2rem; align-items:flex-start;">
+      <div class="card">
+        <div class="form-group"><div class="form-label"><span>Child Age</span><span class="val-badge" id="childAgeBadge">3 Years</span></div><input type="range" class="range-slider" id="childAge" min="0" max="15" value="3" oninput="runEdu()"></div>
+        <div class="form-group"><div class="form-label"><span>College Age</span><span class="val-badge" id="collegeAgeBadge">18 Years</span></div><input type="range" class="range-slider" id="collegeAge" min="16" max="23" value="18" oninput="runEdu()"></div>
+        <div class="form-group"><div class="form-label"><span>Cost Today (₹)</span><span class="val-badge" id="courseCostBadge">₹30,00,000</span></div><input type="range" class="range-slider" id="courseCost" min="500000" max="15000000" step="500000" value="3000000" oninput="runEdu()"></div>
+        <div class="form-group"><div class="form-label"><span>Education Inflation (%)</span><span class="val-badge" id="eduInfBadge">10%</span></div><input type="range" class="range-slider" id="eduInf" min="6" max="14" step="0.5" value="10" oninput="runEdu()"></div>
+        <button class="btn btn-gold" style="width:100%;" onclick="openWhatsApp('Hi Dveep Sir, I want to plan my child education fund.')">Plan Child Fund with Dveep</button>
+      </div>
+      <div class="card">
+        <div class="grid-3" style="gap:1rem; margin-bottom:1.5rem;">
+          <div class="stat-box"><div class="stat-label">Cost Today</div><div class="stat-value" id="resBox1">₹30.00 L</div></div>
+          <div class="stat-box"><div class="stat-label">Future Cost</div><div class="stat-value gold" id="resBox2">₹1.25 Cr</div></div>
+          <div class="stat-box"><div class="stat-label">Required SIP</div><div class="stat-value emerald" id="resBox3">₹24,960/mo</div></div>
+        </div>
+        <div style="height:240px;"><canvas id="calcGenChart"></canvas></div>
+      </div>
+    </div>
+  </main>
+  <script src="../js/calculators.js"></script><script src="../js/main.js"></script>
+  <script>
+    let eduChart = null;
+    function runEdu() {
+      const cAge = parseFloat(document.getElementById('childAge').value);
+      const colAge = parseFloat(document.getElementById('collegeAge').value);
+      const cost = parseFloat(document.getElementById('courseCost').value);
+      const inf = parseFloat(document.getElementById('eduInf').value);
+
+      document.getElementById('childAgeBadge').textContent = cAge + ' Years';
+      document.getElementById('collegeAgeBadge').textContent = colAge + ' Years';
+      document.getElementById('courseCostBadge').textContent = formatINR(cost, false);
+      document.getElementById('eduInfBadge').textContent = inf + '%';
+
+      const yrsLeft = Math.max(1, colAge - cAge);
+      const futureCost = cost * Math.pow(1 + (inf/100), yrsLeft);
+      const reqSIP = calculateRequiredSIP(futureCost, 12, yrsLeft);
+
+      document.getElementById('resBox1').textContent = formatINR(cost);
+      document.getElementById('resBox2').textContent = formatINR(futureCost);
+      document.getElementById('resBox3').textContent = formatINR(reqSIP) + '/mo';
+
+      const ctx = document.getElementById('calcGenChart').getContext('2d');
+      if (eduChart) eduChart.destroy();
+      eduChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: { labels: ["Today's Cost", 'Inflation Gap'], datasets: [{ data: [cost, futureCost - cost], backgroundColor: ['#3B82F6', '#EC4899'], borderWidth: 0 }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#94A3B8' } } } }
+      });
+    }
+    document.addEventListener('DOMContentLoaded', runEdu);
+  </script>
+</body>
+</html>
