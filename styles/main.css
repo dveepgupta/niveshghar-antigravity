@@ -1,105 +1,87 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
-/* Default / Theme 1: Royal Sapphire & Champagne Gold */
-:root, body.theme-royal {
-  --bg-primary: #070D18;
-  --bg-secondary: #0D1B2A;
-  --bg-card: rgba(18, 32, 53, 0.75);
-  --bg-card-hover: rgba(28, 48, 77, 0.85);
-  --bg-input: rgba(10, 22, 38, 0.9);
-  --border-color: rgba(255, 255, 255, 0.08);
-  --border-focus: #00D293;
+/* ==========================================================================
+   Template 1: The Professional Dark (Blue) - Default
+   ========================================================================== */
+:root, body.theme-blue {
+  --bg-primary: #0A1930;
+  --bg-secondary: #071224;
+  --bg-card: rgba(17, 34, 64, 0.85);
+  --bg-card-hover: rgba(26, 49, 90, 0.95);
+  --bg-input: #071224;
+  --border-color: rgba(0, 123, 255, 0.25);
+  --border-focus: #007BFF;
+  --accent-primary: #007BFF;
+  --accent-gradient: linear-gradient(135deg, #007BFF 0%, #00B4DB 100%);
+  --accent-cta-bg: #007BFF;
+  --accent-cta-text: #FFFFFF;
+  --accent-secondary: #00D293;
   --accent-gold: #F5A623;
-  --accent-gold-gradient: linear-gradient(135deg, #F5A623 0%, #F7C04A 100%);
-  --accent-emerald: #00D293;
-  --accent-emerald-gradient: linear-gradient(135deg, #00D293 0%, #00F5A0 100%);
-  --accent-blue: #3B82F6;
-  --accent-cyan: #06B6D4;
-  --text-primary: #F8FAFC;
-  --text-secondary: #94A3B8;
-  --text-muted: #64748B;
-  --nav-bg: rgba(7, 13, 24, 0.88);
-  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --text-primary: #FFFFFF;
+  --text-secondary: #E0E0E0;
+  --text-muted: #94A3B8;
+  --nav-bg: rgba(10, 25, 48, 0.92);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 20px;
   --radius-full: 9999px;
   --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --bg-glow: radial-gradient(circle at 15% 15%, rgba(0, 210, 147, 0.07) 0%, transparent 40%),
-             radial-gradient(circle at 85% 85%, rgba(245, 166, 35, 0.06) 0%, transparent 40%);
+  --bg-glow: radial-gradient(circle at 15% 15%, rgba(0, 123, 255, 0.12) 0%, transparent 40%),
+             radial-gradient(circle at 85% 85%, rgba(0, 180, 219, 0.08) 0%, transparent 40%);
 }
 
-/* Theme 2: Clean Institutional White & Navy Blue (Light Mode) */
-body.theme-light {
-  --bg-primary: #F8FAFC;
-  --bg-secondary: #FFFFFF;
-  --bg-card: rgba(255, 255, 255, 0.95);
-  --bg-card-hover: #FFFFFF;
-  --bg-input: #F1F5F9;
-  --border-color: rgba(15, 23, 42, 0.12);
-  --border-focus: #0284C7;
-  --accent-gold: #D97706;
-  --accent-gold-gradient: linear-gradient(135deg, #D97706 0%, #F59E0B 100%);
-  --accent-emerald: #059669;
-  --accent-emerald-gradient: linear-gradient(135deg, #059669 0%, #10B981 100%);
-  --accent-blue: #1D4ED8;
-  --accent-cyan: #0284C7;
-  --text-primary: #0F172A;
-  --text-secondary: #475569;
-  --text-muted: #94A3B8;
-  --nav-bg: rgba(255, 255, 255, 0.92);
-  --glass-shadow: 0 4px 20px 0 rgba(15, 23, 42, 0.06);
-  --bg-glow: radial-gradient(circle at 15% 15%, rgba(2, 132, 199, 0.06) 0%, transparent 40%),
-             radial-gradient(circle at 85% 85%, rgba(5, 150, 105, 0.06) 0%, transparent 40%);
-}
-
-/* Theme 3: Deep Forest Emerald & Warm Sovereign Gold (Growth & Wealth) */
-body.theme-forest {
-  --bg-primary: #041812;
-  --bg-secondary: #0A2E23;
-  --bg-card: rgba(10, 46, 35, 0.8);
-  --bg-card-hover: rgba(16, 68, 52, 0.9);
-  --bg-input: rgba(6, 30, 23, 0.95);
-  --border-color: rgba(5, 214, 158, 0.15);
-  --border-focus: #05D69E;
+/* ==========================================================================
+   Template 2: The Growth & Prosperity (Green)
+   ========================================================================== */
+body.theme-green {
+  --bg-primary: #164A41;
+  --bg-secondary: #0F332C;
+  --bg-card: rgba(22, 74, 65, 0.9);
+  --bg-card-hover: rgba(30, 98, 86, 0.95);
+  --bg-input: #0D2B25;
+  --border-color: rgba(0, 230, 118, 0.25);
+  --border-focus: #00E676;
+  --accent-primary: #00E676;
+  --accent-gradient: linear-gradient(135deg, #00E676 0%, #69F0AE 100%);
+  --accent-cta-bg: #00E676;
+  --accent-cta-text: #0F332C;
+  --accent-secondary: #FBBF24;
   --accent-gold: #FBBF24;
-  --accent-gold-gradient: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%);
-  --accent-emerald: #05D69E;
-  --accent-emerald-gradient: linear-gradient(135deg, #05D69E 0%, #34D399 100%);
-  --accent-blue: #10B981;
-  --accent-cyan: #2DD4BF;
-  --text-primary: #F0FDF4;
-  --text-secondary: #86EFAC;
-  --text-muted: #4ADE80;
-  --nav-bg: rgba(4, 24, 18, 0.92);
+  --text-primary: #FFFFFF;
+  --text-secondary: #E8F5E9;
+  --text-muted: #A5D6A7;
+  --nav-bg: rgba(22, 74, 65, 0.95);
   --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
-  --bg-glow: radial-gradient(circle at 15% 15%, rgba(5, 214, 158, 0.1) 0%, transparent 40%),
-             radial-gradient(circle at 85% 85%, rgba(251, 191, 36, 0.08) 0%, transparent 40%);
+  --bg-glow: radial-gradient(circle at 15% 15%, rgba(0, 230, 118, 0.12) 0%, transparent 40%),
+             radial-gradient(circle at 85% 85%, rgba(105, 240, 174, 0.08) 0%, transparent 40%);
 }
 
-/* Theme 4: Titanium Charcoal & Electric Cyan (Fintech Modern) */
-body.theme-cyan {
-  --bg-primary: #0A0D14;
-  --bg-secondary: #121824;
-  --bg-card: rgba(18, 24, 36, 0.8);
-  --bg-card-hover: rgba(28, 38, 58, 0.9);
-  --bg-input: rgba(12, 16, 26, 0.95);
-  --border-color: rgba(6, 182, 212, 0.2);
-  --border-focus: #00F0FF;
-  --accent-gold: #38BDF8;
-  --accent-gold-gradient: linear-gradient(135deg, #0284C7 0%, #38BDF8 100%);
-  --accent-emerald: #00F0FF;
-  --accent-emerald-gradient: linear-gradient(135deg, #06B6D4 0%, #00F0FF 100%);
-  --accent-blue: #0284C7;
-  --accent-cyan: #00F0FF;
-  --text-primary: #F1F5F9;
-  --text-secondary: #94A3B8;
-  --text-muted: #64748B;
-  --nav-bg: rgba(10, 13, 20, 0.92);
-  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-  --bg-glow: radial-gradient(circle at 15% 15%, rgba(0, 240, 255, 0.08) 0%, transparent 40%),
-             radial-gradient(circle at 85% 85%, rgba(56, 189, 248, 0.06) 0%, transparent 40%);
+/* ==========================================================================
+   Template 3: The Innovation & Vision (Purple)
+   ========================================================================== */
+body.theme-purple {
+  --bg-primary: #230838;
+  --bg-secondary: #170426;
+  --bg-card: rgba(75, 0, 130, 0.5);
+  --bg-card-hover: rgba(95, 10, 160, 0.65);
+  --bg-input: #170426;
+  --border-color: rgba(156, 39, 176, 0.35);
+  --border-focus: #9C27B0;
+  --accent-primary: #9C27B0;
+  --accent-gradient: linear-gradient(135deg, #9C27B0 0%, #BA68C8 100%);
+  --accent-cta-bg: #9C27B0;
+  --accent-cta-text: #FFFFFF;
+  --accent-secondary: #00E5FF;
+  --accent-gold: #FFD54F;
+  --text-primary: #FFFFFF;
+  --text-secondary: #D1C4E9;
+  --text-muted: #B39DDB;
+  --nav-bg: rgba(35, 8, 56, 0.95);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.55);
+  --bg-glow: radial-gradient(circle at 15% 15%, rgba(156, 39, 176, 0.15) 0%, transparent 40%),
+             radial-gradient(circle at 85% 85%, rgba(75, 0, 130, 0.25) 0%, transparent 40%);
 }
 
 * {
@@ -163,8 +145,8 @@ a {
 }
 
 .logo-badge {
-  background: var(--accent-gold-gradient);
-  color: #070D18;
+  background: var(--accent-gradient);
+  color: var(--accent-cta-text);
   padding: 0.2rem 0.5rem;
   border-radius: var(--radius-sm);
   font-size: 0.7rem;
@@ -190,8 +172,8 @@ a {
 }
 
 .nav-link:hover, .nav-link.active {
-  color: var(--accent-emerald);
-  background: rgba(0, 210, 147, 0.08);
+  color: var(--accent-primary);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .nav-cta {
@@ -230,25 +212,27 @@ a {
 }
 
 .btn-primary {
-  background: var(--accent-emerald-gradient);
-  color: #070D18;
-  box-shadow: 0 4px 14px rgba(0, 210, 147, 0.35);
+  background: var(--accent-cta-bg);
+  color: var(--accent-cta-text);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 210, 147, 0.5);
+  filter: brightness(1.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
 }
 
 .btn-gold {
-  background: var(--accent-gold-gradient);
-  color: #070D18;
-  box-shadow: 0 4px 14px rgba(245, 166, 35, 0.35);
+  background: var(--accent-gradient);
+  color: var(--accent-cta-text);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
 }
 
 .btn-gold:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(245, 166, 35, 0.5);
+  filter: brightness(1.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
 }
 
 .btn-outline {
@@ -258,9 +242,9 @@ a {
 }
 
 .btn-outline:hover {
-  border-color: var(--accent-emerald);
-  color: var(--accent-emerald);
-  background: rgba(0, 210, 147, 0.05);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .main-wrapper {
@@ -282,10 +266,10 @@ a {
   align-items: center;
   gap: 0.5rem;
   padding: 0.4rem 1rem;
-  background: rgba(245, 166, 35, 0.12);
-  border: 1px solid rgba(245, 166, 35, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-full);
-  color: var(--accent-gold);
+  color: var(--accent-primary);
   font-size: 0.85rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
@@ -299,7 +283,7 @@ a {
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, var(--text-primary) 20%, var(--accent-emerald) 70%, var(--accent-gold) 100%);
+  background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent-primary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -323,14 +307,14 @@ a {
 }
 
 .card:hover {
-  border-color: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.3);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
 }
 
 .card-highlight {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(245, 166, 35, 0.4);
+  border: 1px solid var(--accent-primary);
 }
 
 .card-highlight::before {
@@ -340,7 +324,7 @@ a {
   left: 0;
   right: 0;
   height: 3px;
-  background: var(--accent-gold-gradient);
+  background: var(--accent-gradient);
 }
 
 .grid-2 {
@@ -387,7 +371,7 @@ a {
 .form-label .val-badge {
   font-family: 'Outfit', sans-serif;
   font-size: 1.1rem;
-  color: var(--accent-emerald);
+  color: var(--accent-primary);
   font-weight: 700;
 }
 
@@ -405,8 +389,8 @@ a {
 
 .form-input:focus {
   outline: none;
-  border-color: var(--accent-emerald);
-  box-shadow: 0 0 0 3px rgba(0, 210, 147, 0.15);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
 }
 
 .range-slider {
@@ -415,7 +399,7 @@ a {
   width: 100%;
   height: 6px;
   border-radius: var(--radius-full);
-  background: rgba(128, 128, 128, 0.25);
+  background: rgba(255, 255, 255, 0.15);
   outline: none;
   margin: 0.5rem 0;
   cursor: pointer;
@@ -427,8 +411,8 @@ a {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: var(--accent-emerald);
-  box-shadow: 0 0 10px rgba(0, 210, 147, 0.6);
+  background: var(--accent-primary);
+  box-shadow: 0 0 10px var(--accent-primary);
   cursor: pointer;
   transition: transform 0.1s ease;
 }
@@ -460,9 +444,9 @@ a {
   color: var(--text-primary);
 }
 
-.stat-value.gold { color: var(--accent-gold); }
-.stat-value.emerald { color: var(--accent-emerald); }
-.stat-value.blue { color: var(--accent-blue); }
+.stat-value.gold { color: var(--accent-secondary); }
+.stat-value.emerald { color: var(--accent-primary); }
+.stat-value.blue { color: var(--accent-primary); }
 
 .custom-table {
   width: 100%;
@@ -487,7 +471,7 @@ a {
 }
 
 .custom-table tr:hover td {
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .footer {
@@ -521,6 +505,7 @@ a {
   border-radius: var(--radius-sm);
   font-size: 0.75rem;
   font-weight: 700;
-  background: rgba(0, 210, 147, 0.15);
-  color: var(--accent-emerald);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--accent-primary);
+  border: 1px solid var(--border-color);
 }
