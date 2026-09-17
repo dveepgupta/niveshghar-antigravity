@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>20-Question Client Discovery Assessment | NiveshGhar</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <span style="color: var(--accent-emerald);">◆</span> Nivesh<span style="color: var(--accent-gold);">Ghar</span>
+        <span class="logo-badge">Wealth Advisory</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="calculators/dveep-special.html" class="nav-link" style="color: var(--accent-gold); font-weight: 700;">★ Dveep's Special</a></li>
+        <li><a href="calculators/sip.html" class="nav-link">SIP</a></li>
+        <li><a href="calculators/swp.html" class="nav-link">SWP (Retirement)</a></li>
+        <li><a href="calculators/goal-planner.html" class="nav-link">Goal Planner</a></li>
+        <li><a href="client-discovery.html" class="nav-link active">20-Q Health Check</a></li>
+      </ul>
+      <div class="nav-cta">
+        <button class="btn btn-primary" onclick="openWhatsApp('Hi Dveep Sir, I want to book a wealth planning consultation')">
+          <span>Book Consultation</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main-wrapper">
+    <div style="margin-bottom: 2rem;">
+      <span class="badge-tag">MFD ADVISORY FRAMEWORK</span>
+      <h1 style="font-size: 2.2rem; margin-top: 0.5rem;">20-Question Client Discovery & Risk Profiler</h1>
+      <p style="color: var(--text-secondary);">
+        Complete diagnostic assessment designed for top Mutual Fund Distributors to evaluate investor risk tolerance, liquidity horizon, asset allocation, and tax optimization.
+      </p>
+    </div>
+
+    <div id="quizContainer" class="card" style="max-width: 860px; margin: 0 auto;">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.5rem;">
+        <span id="questionStep" style="font-weight: 700; color: var(--accent-emerald);">Question 1 of 20</span>
+        <span id="categoryLabel" class="badge-tag">Risk Capacity</span>
+      </div>
+
+      <h2 id="questionTitle" style="font-size: 1.35rem; margin-bottom: 1.5rem;">Loading question...</h2>
+      <div id="optionsContainer" style="display: flex; flex-direction: column; gap: 0.75rem;"></div>
+
+      <div style="display: flex; justify-content: space-between; margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 1.25rem;">
+        <button id="prevBtn" class="btn btn-outline" onclick="prevQuestion()" disabled>← Previous</button>
+      </div>
+    </div>
+
+    <div id="resultContainer" class="card" style="display: none; max-width: 860px; margin: 0 auto; text-align: center;">
+      <span class="badge-tag" style="background: rgba(0,210,147,0.2); color: var(--accent-emerald);">ASSESSMENT COMPLETE</span>
+      <h2 style="font-size: 2rem; margin: 1rem 0 0.5rem;" id="riskProfileTitle">Aggressive Wealth Creator</h2>
+      <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto 2rem;" id="riskProfileDesc">
+        Based on your responses, you possess a long-term investment horizon with strong risk tolerance.
+      </p>
+
+      <div class="grid-3" style="margin-bottom: 2rem;">
+        <div class="stat-box">
+          <div class="stat-label">Suggested Equity Allocation</div>
+          <div class="stat-value emerald" id="equityAlloc">75%</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Suggested Debt / Liquid</div>
+          <div class="stat-value blue" id="debtAlloc">15%</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Gold / Alternatives</div>
+          <div class="stat-value gold" id="goldAlloc">10%</div>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+        <button class="btn btn-gold" onclick="openWhatsApp('Hi Dveep Sir, I completed the 20-Q assessment. My profile: ' + document.getElementById('riskProfileTitle').textContent + '. Please share my customized fund portfolio.')">
+          💬 Send Report to Advisor Dveep on WhatsApp
+        </button>
+        <button class="btn btn-outline" onclick="location.reload()">Retake Assessment</button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-disclaimer">
+        <strong>Regulatory & AMFI Disclosure:</strong> Mutual Fund investments are subject to market risks, read all scheme related documents carefully. Past performance of benchmark indices (Nifty 50, Nifty Next 50, Nifty Midcap 150, Nifty Smallcap 250, Nifty 500, Gold) is for illustrative and backtesting educational purposes only and does not guarantee future returns.
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <div><p>© 2026 <strong>NiveshGhar</strong>. Crafted for discerning investors by Dveep Wealth Advisory.</p></div>
+        <div style="display: flex; gap: 1.5rem;">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="calculators/dveep-special.html" class="nav-link">Backtest Engine</a>
+          <a href="client-discovery.html" class="nav-link">Client Discovery</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    const QUESTIONS = [
+      { cat: "Investor Demographics", q: "1. What is your current age bracket?", opts: [{ text: "Under 30 years", score: 4 }, { text: "30 to 45 years", score: 3 }, { text: "45 to 55 years", score: 2 }, { text: "Above 55 years", score: 1 }] },
+      { cat: "Income Stability", q: "2. How predictable and stable is your primary source of monthly income?", opts: [{ text: "Highly stable (Govt / MNC / Established Business)", score: 4 }, { text: "Moderately stable with occasional incentives", score: 3 }, { text: "Variable / Commission or Startup based", score: 2 }, { text: "Retired / Dependent on investment yields", score: 1 }] },
+      { cat: "Investment Horizon", q: "3. For what duration are you planning to invest your primary surplus funds?", opts: [{ text: "More than 10+ years", score: 4 }, { text: "5 to 10 years", score: 3 }, { text: "3 to 5 years", score: 2 }, { text: "Less than 3 years", score: 1 }] },
+      { cat: "Emergency Preparedness", q: "4. Do you have an emergency fund covering at least 6 months of household expenses?", opts: [{ text: "Yes, fully parked in liquid funds / FD", score: 4 }, { text: "Partially (3-4 months covered)", score: 3 }, { text: "No, but I have credit lines available", score: 2 }, { text: "No emergency reserves currently", score: 1 }] },
+      { cat: "Market Volatility Tolerance", q: "5. If the stock market drops by 25% in 3 months (like in 2008 or 2020), what will you do?", opts: [{ text: "Invest heavily to buy top funds at a discount", score: 4 }, { text: "Continue existing SIPs without panicking", score: 3 }, { text: "Pause SIPs and wait for market recovery", score: 2 }, { text: "Redeem everything immediately to prevent further loss", score: 1 }] },
+      { cat: "Primary Goal", q: "6. What is the single most important objective for this portfolio?", opts: [{ text: "Aggressive wealth compounding & beat inflation by 6-8%", score: 4 }, { text: "Balanced growth for specific goals (House / Education)", score: 3 }, { text: "Income generation with moderate capital protection", score: 2 }, { text: "100% Capital preservation with zero volatility", score: 1 }] },
+      { cat: "Experience", q: "7. How many years have you been actively investing in Equity Mutual Funds or Stocks?", opts: [{ text: "Over 5+ years (witnessed full bull/bear cycles)", score: 4 }, { text: "2 to 5 years", score: 3 }, { text: "Less than 2 years", score: 2 }, { text: "Complete beginner (first time investor)", score: 1 }] },
+      { cat: "Debt Exposure", q: "8. What percentage of your monthly income goes into loan EMIs (Home/Car/Personal)?", opts: [{ text: "0% (Completely debt free)", score: 4 }, { text: "Less than 20% of monthly income", score: 3 }, { text: "20% to 40% of monthly income", score: 2 }, { text: "More than 40% of monthly income", score: 1 }] },
+      { cat: "Insurance Shield", q: "9. Do you have adequate Term Life Insurance (15-20x annual income) and Health Insurance?", opts: [{ text: "Yes, comprehensive term & private health cover in place", score: 4 }, { text: "Have corporate health insurance only", score: 2 }, { text: "Have traditional endowment / ULIP policies only", score: 2 }, { text: "No active life/health insurance", score: 1 }] },
+      { cat: "Drawdown Capacity", q: "10. What is the maximum temporary drawdown you can bear without sleepless nights?", opts: [{ text: "Up to 30-40% decline in pursuit of 15%+ returns", score: 4 }, { text: "Up to 15-20% temporary decline", score: 3 }, { text: "Up to 5-10% decline", score: 2 }, { text: "Cannot tolerate any negative returns", score: 1 }] },
+      { cat: "Liquidity Requirement", q: "11. Will you need access to more than 20% of this capital in the next 24 months?", opts: [{ text: "No, none of it is needed for 5+ years", score: 4 }, { text: "Unlikely, unless major unplanned contingency", score: 3 }, { text: "Possibly 10-20% for a planned milestone", score: 2 }, { text: "Yes, definitely need liquidity soon", score: 1 }] },
+      { cat: "Gold Stance", q: "12. What is your perspective on Gold allocation (Gold Mutual Funds / ETFs)?", opts: [{ text: "5-10% tactical hedge against currency devaluation", score: 4 }, { text: "Only when equity valuations appear stretched", score: 3 }, { text: "Prefer traditional physical jewelry over funds", score: 2 }, { text: "No interest in gold allocation", score: 1 }] },
+      { cat: "Step-Up Ability", q: "13. Are you able to increase your SIP contribution by 10% each year as your income grows?", opts: [{ text: "Yes, committed to 10-15% annual step-up", score: 4 }, { text: "Yes, 5% step-up is feasible", score: 3 }, { text: "Fixed SIP only for now", score: 2 }, { text: "Unsure about future increments", score: 1 }] },
+      { cat: "Tax Efficiency", q: "14. Which tax regime are you opting for in the current financial year?", opts: [{ text: "New Tax Regime (Focusing on LTCG equity growth)", score: 4 }, { text: "Old Tax Regime (Requiring 80C ELSS mutual funds)", score: 3 }, { text: "NRI / Global Tax Residency", score: 3 }, { text: "Income below basic taxable threshold", score: 2 }] },
+      { cat: "Portfolio Tracking Habit", q: "15. How frequently do you check your investment portfolio value?", opts: [{ text: "Quarterly / Annual disciplined review with my advisor", score: 4 }, { text: "Monthly during salary credit", score: 3 }, { text: "Weekly", score: 2 }, { text: "Daily / Multiple times a day with anxiety", score: 1 }] },
+      { cat: "Mid & Smallcap Appetite", q: "16. How comfortable are you with higher allocation to Midcap and Smallcap funds?", opts: [{ text: "Very comfortable for the 10+ year portion of my wealth", score: 4 }, { text: "Moderate (Prefer Largecap & Flexicap bias)", score: 3 }, { text: "Low (Only Largecap indices)", score: 2 }, { text: "Zero tolerance for high volatility", score: 1 }] },
+      { cat: "Retirement Readiness", q: "17. At what age do you desire financial independence / retirement?", opts: [{ text: "Before 50 (FIRE movement)", score: 4 }, { text: "55 to 60 years", score: 3 }, { text: "60 to 65 years", score: 2 }, { text: "Have not planned yet", score: 1 }] },
+      { cat: "Family Dependents", q: "18. How many financial dependents (children, elderly parents) do you support?", opts: [{ text: "0-1 dependent", score: 4 }, { text: "2 dependents", score: 3 }, { text: "3 dependents", score: 2 }, { text: "4 or more dependents", score: 1 }] },
+      { cat: "Advisory Preference", q: "19. What do you value most in a Mutual Fund Distributor / Wealth Advisor?", opts: [{ text: "Asset allocation, behavioral coaching during crashes, and milestone tracking", score: 4 }, { text: "Consistent scheme selection and portfolio rebalancing", score: 3 }, { text: "Tax planning and hassle-free documentation", score: 2 }, { text: "Tips on short-term trending funds", score: 1 }] },
+      { cat: "Discipline", q: "20. How likely are you to pause or stop your SIP when news headlines turn negative?", opts: [{ text: "Never — I view negative headlines as prime buying opportunities", score: 4 }, { text: "I consult my advisor Dveep before making any emotional change", score: 4 }, { text: "I get tempted to pause until clarity returns", score: 2 }, { text: "I stop immediately to protect capital", score: 1 }] }
+    ];
+
+    let currentIdx = 0;
+    const userAnswers = [];
+
+    function renderQuestion() {
+      const q = QUESTIONS[currentIdx];
+      document.getElementById('questionStep').textContent = `Question ${currentIdx + 1} of ${QUESTIONS.length}`;
+      document.getElementById('categoryLabel').textContent = q.cat;
+      document.getElementById('questionTitle').textContent = q.q;
+
+      const optsCont = document.getElementById('optionsContainer');
+      optsCont.innerHTML = '';
+
+      q.opts.forEach((opt, optIdx) => {
+        const btn = document.createElement('button');
+        btn.className = 'btn btn-outline';
+        btn.style.textAlign = 'left';
+        btn.style.justifyContent = 'flex-start';
+        btn.style.padding = '1rem 1.25rem';
+        btn.style.borderRadius = 'var(--radius-md)';
+        btn.innerHTML = `<span style="color: var(--accent-emerald); font-weight: 700; margin-right: 0.5rem;">${String.fromCharCode(65 + optIdx)}.</span> ${opt.text}`;
+        btn.onclick = () => selectOption(opt.score);
+        optsCont.appendChild(btn);
+      });
+
+      document.getElementById('prevBtn').disabled = (currentIdx === 0);
+    }
+
+    function selectOption(score) {
+      userAnswers[currentIdx] = score;
+      if (currentIdx < QUESTIONS.length - 1) {
+        currentIdx++;
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentIdx > 0) {
+        currentIdx--;
+        renderQuestion();
+      }
+    }
+
+    function showResults() {
+      const sum = userAnswers.reduce((a, b) => a + b, 0);
+      document.getElementById('quizContainer').style.display = 'none';
+      document.getElementById('resultContainer').style.display = 'block';
+
+      let title = "Aggressive Wealth Compounder";
+      let desc = "You have high risk-bearing capacity and a long-term mindset. You are primed to maximize equity returns via Multi-cap, Midcap, and Flexicap funds.";
+      let eq = "75%", debt = "15%", gold = "10%";
+
+      if (sum <= 40) {
+        title = "Conservative Capital Preserver";
+        desc = "Your primary priority is stability and capital security. A high allocation to Hybrid, Arbitrage, and Debt funds is recommended.";
+        eq = "25%"; debt = "65%"; gold = "10%";
+      } else if (sum <= 60) {
+        title = "Balanced Growth Investor";
+        desc = "You seek good equity compounding while maintaining a healthy debt cushion to navigate market fluctuations calmly.";
+        eq = "55%"; debt = "35%"; gold = "10%";
+      }
+
+      document.getElementById('riskProfileTitle').textContent = title;
+      document.getElementById('riskProfileDesc').textContent = desc;
+      document.getElementById('equityAlloc').textContent = eq;
+      document.getElementById('debtAlloc').textContent = debt;
+      document.getElementById('goldAlloc').textContent = gold;
+    }
+
+    document.addEventListener('DOMContentLoaded', renderQuestion);
+  </script>
+</body>
+</html>
