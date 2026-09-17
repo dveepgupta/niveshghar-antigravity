@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cost of Delay Calculator | NiveshGhar Advisory</title>
+  <link rel="stylesheet" href="../styles/main.css"><script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <nav class="navbar"><div class="nav-container"><a href="../index.html" class="logo"><span style="color:var(--accent-emerald);">◆</span> Nivesh<span style="color:var(--accent-gold);">Ghar</span></a><ul class="nav-links"><li><a href="../index.html" class="nav-link">Home</a></li><li><a href="dveep-special.html" class="nav-link" style="color:var(--accent-gold);">★ Dveep's Special</a></li><li><a href="inflation.html" class="nav-link active">Cost of Delay</a></li></ul><button class="btn btn-primary" onclick="openWhatsApp()">Book Consultation</button></div></nav>
+  <main class="main-wrapper">
+    <h1 style="font-size: 2.2rem;">Cost of Delay & Opportunity Loss Calculator</h1>
+    <div class="grid-2" style="margin-top:1.5rem; gap:2rem; align-items:flex-start;">
+      <div class="card">
+        <div class="form-group"><div class="form-label"><span>Planned Monthly SIP (₹)</span><span class="val-badge" id="delaySIPBadge">₹15,000</span></div><input type="range" class="range-slider" id="delaySIP" min="2000" max="100000" step="1000" value="15000" oninput="runDelay()"></div>
+        <div class="form-group"><div class="form-label"><span>Delay Period (Years)</span><span class="val-badge" id="delayYrsBadge">3 Years Delay</span></div><input type="range" class="range-slider" id="delayYrs" min="1" max="7" step="1" value="3" oninput="runDelay()"></div>
+        <div class="form-group"><div class="form-label"><span>Total Horizon (Years)</span><span class="val-badge" id="totalYrsBadge">20 Years</span></div><input type="range" class="range-slider" id="totalYrs" min="10" max="35" step="1" value="20" oninput="runDelay()"></div>
+        <button class="btn btn-gold" style="width:100%;" onclick="openWhatsApp('Hi Dveep Sir, I want to start my investments without delay.')">Start Investing Today</button>
+      </div>
+      <div class="card">
+        <div class="grid-3" style="gap:1rem; margin-bottom:1.5rem;">
+          <div class="stat-box"><div class="stat-label">On-Time Wealth</div><div class="stat-value" id="resBox1">₹1.49 Cr</div></div>
+          <div class="stat-box"><div class="stat-label">Delayed Wealth</div><div class="stat-value" id="resBox2">₹1.00 Cr</div></div>
+          <div class="stat-box"><div class="stat-label">Cost of Delay</div><div class="stat-value" style="color: #EF4444;" id="resBox3">₹49.20 L</div></div>
+        </div>
+        <div style="height:240px;"><canvas id="calcGenChart"></canvas></div>
+      </div>
+    </div>
+  </main>
+  <script src="../js/calculators.js"></script><script src="../js/main.js"></script>
+  <script>
+    let delayChart = null;
+    function runDelay() {
+      const sip = parseFloat(document.getElementById('delaySIP').value);
+      const delay = parseFloat(document.getElementById('delayYrs').value);
+      const totalYrs = parseFloat(document.getElementById('totalYrs').value);
+
+      document.getElementById('delaySIPBadge').textContent = formatINR(sip, false);
+      document.getElementById('delayYrsBadge').textContent = delay + ' Years Delay';
+      document.getElementById('totalYrsBadge').textContent = totalYrs + ' Years';
+
+      const onTime = calculateSIP(sip, 12, totalYrs);
+      const delayed = calculateSIP(sip, 12, Math.max(1, totalYrs - delay));
+      const costOfDelay = onTime.total - delayed.total;
+
+      document.getElementById('resBox1').textContent = formatINR(onTime.total);
+      document.getElementById('resBox2').textContent = formatINR(delayed.total);
+      document.getElementById('resBox3').textContent = formatINR(costOfDelay);
+
+      const ctx = document.getElementById('calcGenChart').getContext('2d');
+      if (delayChart) delayChart.destroy();
+      delayChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Start Today (' + totalYrs + 'Y)', 'Delayed by ' + delay + 'Y (' + (totalYrs-delay) + 'Y)', 'Cost of Delay (Loss)'],
+          datasets: [{ label: 'Impact in ₹', data: [onTime.total, delayed.total, costOfDelay], backgroundColor: ['#00D293', '#3B82F6', '#EF4444'] }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94A3B8' } }, y: { ticks: { color: '#94A3B8', callback: v => formatINR(v) } } } }
+      });
+    }
+    document.addEventListener('DOMContentLoaded', runDelay);
+  </script>
+</body>
+</html>
