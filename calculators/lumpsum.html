@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lumpsum Investment Calculator | NiveshGhar Advisory</title>
+  <link rel="stylesheet" href="../styles/main.css"><script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <nav class="navbar"><div class="nav-container"><a href="../index.html" class="logo"><span style="color:var(--accent-emerald);">◆</span> Nivesh<span style="color:var(--accent-gold);">Ghar</span></a><ul class="nav-links"><li><a href="../index.html" class="nav-link">Home</a></li><li><a href="dveep-special.html" class="nav-link" style="color:var(--accent-gold);">★ Dveep's Special</a></li><li><a href="sip.html" class="nav-link">SIP</a></li><li><a href="lumpsum.html" class="nav-link active">Lumpsum</a></li></ul><button class="btn btn-primary" onclick="openWhatsApp()">Book Consultation</button></div></nav>
+  <main class="main-wrapper">
+    <h1 style="font-size: 2.2rem;">Lumpsum Compounding Calculator</h1>
+    <div class="grid-2" style="margin-top:1.5rem; gap:2rem; align-items:flex-start;">
+      <div class="card">
+        <div class="form-group"><div class="form-label"><span>Total Investment (₹)</span><span class="val-badge" id="lumpBadge">₹5,00,000</span></div><input type="range" class="range-slider" id="lumpPrincipal" min="10000" max="10000000" step="10000" value="500000" oninput="runLump()"></div>
+        <div class="form-group"><div class="form-label"><span>Expected Return Rate (p.a %)</span><span class="val-badge" id="rateBadge">12%</span></div><input type="range" class="range-slider" id="lumpRate" min="4" max="24" step="0.5" value="12" oninput="runLump()"></div>
+        <div class="form-group"><div class="form-label"><span>Investment Horizon (Years)</span><span class="val-badge" id="yrsBadge">15 Years</span></div><input type="range" class="range-slider" id="lumpYrs" min="1" max="35" step="1" value="15" oninput="runLump()"></div>
+        <button class="btn btn-gold" style="width:100%;" onclick="openWhatsApp('Hi Dveep Sir, I want to invest a lumpsum amount.')">Invest Lumpsum with Dveep</button>
+      </div>
+      <div class="card">
+        <div class="grid-3" style="gap:1rem; margin-bottom:1.5rem;">
+          <div class="stat-box"><div class="stat-label">Principal</div><div class="stat-value" id="resBox1">₹5.00 L</div></div>
+          <div class="stat-box"><div class="stat-label">Estimated Gains</div><div class="stat-value emerald" id="resBox2">₹22.37 L</div></div>
+          <div class="stat-box"><div class="stat-label">Total Corpus</div><div class="stat-value gold" id="resBox3">₹27.37 L</div></div>
+        </div>
+        <div style="height:240px;"><canvas id="calcGenChart"></canvas></div>
+      </div>
+    </div>
+  </main>
+  <script src="../js/calculators.js"></script><script src="../js/main.js"></script>
+  <script>
+    let genChart = null;
+    function runLump() {
+      const p = parseFloat(document.getElementById('lumpPrincipal').value);
+      const r = parseFloat(document.getElementById('lumpRate').value);
+      const y = parseFloat(document.getElementById('lumpYrs').value);
+      document.getElementById('lumpBadge').textContent = formatINR(p, false);
+      document.getElementById('rateBadge').textContent = r + '%';
+      document.getElementById('yrsBadge').textContent = y + ' Years';
+      const res = calculateLumpsum(p, r, y);
+      document.getElementById('resBox1').textContent = formatINR(res.invested);
+      document.getElementById('resBox2').textContent = formatINR(res.returns);
+      document.getElementById('resBox3').textContent = formatINR(res.total);
+      const ctx = document.getElementById('calcGenChart').getContext('2d');
+      if (genChart) genChart.destroy();
+      genChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: { labels: ['Principal Invested', 'Wealth Gain'], datasets: [{ data: [res.invested, res.returns], backgroundColor: ['#3B82F6', '#00D293'], borderWidth: 0 }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#94A3B8' } } } }
+      });
+    }
+    document.addEventListener('DOMContentLoaded', runLump);
+  </script>
+</body>
+</html>
