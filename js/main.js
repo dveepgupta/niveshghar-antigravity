@@ -1,12 +1,10 @@
 // NiveshGhar Global Client Advisory Scripts
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('NiveshGhar Advisory Portal loaded');
-});
+// Official Verified Advisor WhatsApp Number for Dveep
+const ADVISOR_WHATSAPP_PHONE = "916351017838";
 
 function openWhatsApp(customMsg) {
-  const phone = "919876543210";
   const text = encodeURIComponent(customMsg || "Hello Dveep Sir, I was exploring your NiveshGhar wealth calculators and would like to schedule a 1-on-1 portfolio consultation.");
-  window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
+  window.open(`https://wa.me/${ADVISOR_WHATSAPP_PHONE}?text=${text}`, '_blank');
 }
 
 function printReport() {
