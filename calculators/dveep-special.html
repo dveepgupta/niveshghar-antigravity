@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dveep's Special Historical Backtest Calculator | NiveshGhar</title>
+  <link rel="stylesheet" href="../styles/main.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="logo">
+        <span style="color: var(--accent-emerald);">◆</span> Nivesh<span style="color: var(--accent-gold);">Ghar</span>
+        <span class="logo-badge">Wealth Advisory</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="../index.html" class="nav-link">Home</a></li>
+        <li><a href="dveep-special.html" class="nav-link active" style="color: var(--accent-gold); font-weight: 700;">★ Dveep's Special</a></li>
+        <li><a href="sip.html" class="nav-link">SIP</a></li>
+        <li><a href="swp.html" class="nav-link">SWP (Retirement)</a></li>
+        <li><a href="goal-planner.html" class="nav-link">Goal Planner</a></li>
+        <li><a href="../client-discovery.html" class="nav-link">20-Q Health Check</a></li>
+      </ul>
+      <div class="nav-cta">
+        <button class="btn btn-primary" onclick="openWhatsApp('Hi Dveep Sir, I want to review my historical backtest with you')">
+          <span>Book Consultation</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main-wrapper">
+    <div style="margin-bottom: 2rem;">
+      <span class="badge-tag" style="background: rgba(245,166,35,0.2); color: var(--accent-gold);">★ EXCLUSIVE BACKTEST ENGINE</span>
+      <h1 style="font-size: 2.4rem; margin-top: 0.5rem;">Dveep's Special 25-Year Index Backtest Calculator</h1>
+      <p style="color: var(--text-secondary);">
+        Backtest actual historical performance across <strong>Nifty 50, Nifty Next 50, Nifty Midcap 150, Nifty Smallcap 250, Nifty 500, and Gold (2000–2025)</strong>.
+      </p>
+    </div>
+
+    <div class="grid-2" style="align-items: flex-start; gap: 2rem;">
+      <div class="card">
+        <h2 style="font-size: 1.3rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+          <span>1. Investment Inputs</span>
+          <button class="btn btn-outline" style="padding: 0.35rem 0.8rem; font-size: 0.8rem;" onclick="resetDefaults()">Reset</button>
+        </h2>
+
+        <div class="form-group">
+          <label class="form-label">Investment Mode</label>
+          <div style="display: flex; gap: 0.5rem;">
+            <button id="modeSIP" class="btn btn-primary" style="flex: 1;" onclick="setMode('sip')">Monthly SIP</button>
+            <button id="modeLump" class="btn btn-outline" style="flex: 1;" onclick="setMode('lump')">Lumpsum</button>
+            <button id="modeBoth" class="btn btn-outline" style="flex: 1;" onclick="setMode('both')">Hybrid (SIP + Lump)</button>
+          </div>
+        </div>
+
+        <div class="form-group" id="sipGroup">
+          <div class="form-label">
+            <span>Monthly SIP Amount</span>
+            <span class="val-badge" id="sipVal">₹15,000</span>
+          </div>
+          <input type="range" class="range-slider" id="sipInput" min="1000" max="200000" step="1000" value="15000" oninput="updateBacktest()">
+        </div>
+
+        <div class="form-group" id="lumpGroup" style="display: none;">
+          <div class="form-label">
+            <span>Initial Lumpsum Amount</span>
+            <span class="val-badge" id="lumpVal">₹5,00,000</span>
+          </div>
+          <input type="range" class="range-slider" id="lumpInput" min="25000" max="5000000" step="25000" value="500000" oninput="updateBacktest()">
+        </div>
+
+        <div class="form-group" id="stepUpGroup">
+          <div class="form-label">
+            <span>Annual SIP Step-Up (%)</span>
+            <span class="val-badge" id="stepUpVal">0%</span>
+          </div>
+          <input type="range" class="range-slider" id="stepUpInput" min="0" max="25" step="1" value="0" oninput="updateBacktest()">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Backtest Horizon (2000 to 2025)</label>
+          <div style="display: flex; gap: 1rem;">
+            <div style="flex: 1;">
+              <label style="font-size: 0.8rem; color: var(--text-muted);">Start Year</label>
+              <select id="startYear" class="form-input" onchange="updateBacktest()">
+                <option value="2000" selected>2000 (25 Years)</option>
+                <option value="2005">2005 (20 Years)</option>
+                <option value="2010">2010 (15 Years)</option>
+                <option value="2015">2015 (10 Years)</option>
+                <option value="2020">2020 (5 Years)</option>
+              </select>
+            </div>
+            <div style="flex: 1;">
+              <label style="font-size: 0.8rem; color: var(--text-muted);">End Year</label>
+              <select id="endYear" class="form-input" onchange="updateBacktest()">
+                <option value="2025" selected>2025 (Latest)</option>
+                <option value="2024">2024</option>
+                <option value="2020">2020</option>
+                <option value="2015">2015</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+          <button class="btn btn-gold" style="flex: 1;" onclick="printReport()">🖨️ Print Client Report</button>
+          <button class="btn btn-primary" style="flex: 1;" onclick="shareOnWhatsApp()">💬 WhatsApp Client Summary</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 style="font-size: 1.3rem; margin-bottom: 1rem;">2. Wealth Growth Trajectory</h2>
+        <div style="position: relative; height: 320px; width: 100%;">
+          <canvas id="backtestChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 2.5rem;">
+      <h2 style="font-size: 1.5rem; margin-bottom: 1.25rem;">3. Benchmark Performance Matrix</h2>
+      <div class="grid-3" id="benchmarkCards"></div>
+    </div>
+
+    <div class="card" style="margin-top: 2.5rem;">
+      <h2 style="font-size: 1.3rem; margin-bottom: 1rem;">4. Year-by-Year Value Breakdown (₹)</h2>
+      <div style="overflow-x: auto;">
+        <table class="custom-table" id="trajectoryTable"></table>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-disclaimer">
+        <strong>Regulatory & AMFI Disclosure:</strong> Mutual Fund investments are subject to market risks, read all scheme related documents carefully. Past performance of benchmark indices (Nifty 50, Nifty Next 50, Nifty Midcap 150, Nifty Smallcap 250, Nifty 500, Gold) is for illustrative and backtesting educational purposes only and does not guarantee future returns. NiveshGhar advisory services are provided by Dveep, AMFI Registered Mutual Fund Distributor / CFA charterholder.
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <div><p>© 2026 <strong>NiveshGhar</strong>. Crafted for discerning investors by Dveep Wealth Advisory.</p></div>
+        <div style="display: flex; gap: 1.5rem;">
+          <a href="../index.html" class="nav-link">Home</a>
+          <a href="dveep-special.html" class="nav-link">Backtest Engine</a>
+          <a href="../client-discovery.html" class="nav-link">Client Discovery</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/calculators.js"></script>
+  <script src="../js/historical-data.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    let currentMode = 'sip';
+    let chartInstance = null;
+
+    function setMode(mode) {
+      currentMode = mode;
+      document.getElementById('modeSIP').className = mode === 'sip' ? 'btn btn-primary' : 'btn btn-outline';
+      document.getElementById('modeLump').className = mode === 'lump' ? 'btn btn-primary' : 'btn btn-outline';
+      document.getElementById('modeBoth').className = mode === 'both' ? 'btn btn-primary' : 'btn btn-outline';
+
+      document.getElementById('sipGroup').style.display = (mode === 'sip' || mode === 'both') ? 'block' : 'none';
+      document.getElementById('stepUpGroup').style.display = (mode === 'sip' || mode === 'both') ? 'block' : 'none';
+      document.getElementById('lumpGroup').style.display = (mode === 'lump' || mode === 'both') ? 'block' : 'none';
+
+      updateBacktest();
+    }
+
+    function resetDefaults() {
+      document.getElementById('sipInput').value = 15000;
+      document.getElementById('lumpInput').value = 500000;
+      document.getElementById('stepUpInput').value = 0;
+      document.getElementById('startYear').value = 2000;
+      document.getElementById('endYear').value = 2025;
+      setMode('sip');
+    }
+
+    function updateBacktest() {
+      const sip = (currentMode === 'sip' || currentMode === 'both') ? parseFloat(document.getElementById('sipInput').value) : 0;
+      const lump = (currentMode === 'lump' || currentMode === 'both') ? parseFloat(document.getElementById('lumpInput').value) : 0;
+      const stepUp = (currentMode === 'sip' || currentMode === 'both') ? parseFloat(document.getElementById('stepUpInput').value) : 0;
+      
+      const startYear = parseInt(document.getElementById('startYear').value);
+      const endYear = parseInt(document.getElementById('endYear').value);
+
+      document.getElementById('sipVal').textContent = formatINR(sip, false);
+      document.getElementById('lumpVal').textContent = formatINR(lump, false);
+      document.getElementById('stepUpVal').textContent = stepUp + '%';
+
+      if (startYear >= endYear) {
+        alert("Start year must be before End year!");
+        return;
+      }
+
+      const backtest = runHistoricalBacktest(startYear, endYear, sip, lump, stepUp);
+      renderChart(backtest);
+      renderCards(backtest);
+      renderTable(backtest);
+    }
+
+    function renderCards(backtest) {
+      const container = document.getElementById('benchmarkCards');
+      container.innerHTML = '';
+      
+      Object.keys(backtest.results).forEach(key => {
+        const item = backtest.results[key];
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.style.borderTop = `3px solid ${item.color}`;
+        card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <strong style="color: ${item.color}; font-size: 1.15rem;">${item.benchmark}</strong>
+            <span class="badge-tag" style="background: rgba(255,255,255,0.05); color: var(--text-secondary);">${item.category}</span>
+          </div>
+          <div style="margin: 1rem 0;">
+            <div style="font-size: 0.8rem; color: var(--text-muted);">FINAL MATURITY VALUE</div>
+            <div style="font-size: 1.7rem; font-weight: 800; font-family: Outfit; color: var(--text-primary);">${formatINR(item.finalValue)}</div>
+          </div>
+          <div class="grid-2" style="gap: 0.5rem; border-top: 1px solid var(--border-color); padding-top: 0.75rem; font-size: 0.85rem;">
+            <div><span style="color: var(--text-muted);">Total Invested:</span><br><strong>${formatINR(item.totalInvested)}</strong></div>
+            <div><span style="color: var(--text-muted);">Multiplier:</span><br><strong style="color: var(--accent-emerald);">${item.multiplier}</strong></div>
+            <div><span style="color: var(--text-muted);">Net Gain:</span><br><strong style="color: var(--accent-gold);">${formatINR(item.gain)}</strong></div>
+            <div><span style="color: var(--text-muted);">Approx CAGR:</span><br><strong style="color: ${item.color};">${item.cagr}</strong></div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderChart(backtest) {
+      const ctx = document.getElementById('backtestChart').getContext('2d');
+      const labels = backtest.years;
+
+      const datasets = Object.keys(backtest.results).map(key => {
+        const item = backtest.results[key];
+        return {
+          label: item.benchmark,
+          data: item.trajectory.map(t => t.value),
+          borderColor: item.color,
+          backgroundColor: item.color + '15',
+          borderWidth: 2.5,
+          tension: 0.3,
+          pointRadius: 3
+        };
+      });
+
+      if (chartInstance) chartInstance.destroy();
+
+      chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: { labels, datasets },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { labels: { color: '#94A3B8', font: { family: 'Plus Jakarta Sans' } } },
+            tooltip: { callbacks: { label: (c) => ` ${c.dataset.label}: ${formatINR(c.raw)}` } }
+          },
+          scales: {
+            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94A3B8' } },
+            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94A3B8', callback: (v) => formatINR(v) } }
+          }
+        }
+      });
+    }
+
+    function renderTable(backtest) {
+      const table = document.getElementById('trajectoryTable');
+      const years = backtest.years;
+      const keys = Object.keys(backtest.results);
+
+      let headHTML = '<thead><tr><th>Year</th><th>Total Invested</th>';
+      keys.forEach(k => { headHTML += `<th style="color:${backtest.results[k].color}">${backtest.results[k].benchmark}</th>`; });
+      headHTML += '</tr></thead><tbody>';
+
+      years.forEach((yr, idx) => {
+        headHTML += `<tr><td><strong>${yr}</strong></td><td>${formatINR(backtest.results[keys[0]].trajectory[idx].invested)}</td>`;
+        keys.forEach(k => { headHTML += `<td>${formatINR(backtest.results[k].trajectory[idx].value)}</td>`; });
+        headHTML += '</tr>';
+      });
+
+      headHTML += '</tbody>';
+      table.innerHTML = headHTML;
+    }
+
+    function shareOnWhatsApp() {
+      const sip = document.getElementById('sipVal').textContent;
+      const start = document.getElementById('startYear').value;
+      const end = document.getElementById('endYear').value;
+      const msg = `*NiveshGhar Backtest Summary by Dveep (CFA/MFD)*\nInvestment: ${sip} / month\nPeriod: ${start} to ${end}\n\nCheck how Nifty 50, Midcaps & Gold turned disciplined SIPs into multi-crore wealth. Schedule your portfolio review today!`;
+      openWhatsApp(msg);
+    }
+
+    document.addEventListener('DOMContentLoaded', updateBacktest);
+  </script>
+</body>
+</html>
