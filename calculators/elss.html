@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ELSS Tax Saver vs PPF Calculator | NiveshGhar</title>
+  <link rel="stylesheet" href="../styles/main.css"><script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <nav class="navbar"><div class="nav-container"><a href="../index.html" class="logo"><span style="color:var(--accent-emerald);">◆</span> Nivesh<span style="color:var(--accent-gold);">Ghar</span></a><ul class="nav-links"><li><a href="../index.html" class="nav-link">Home</a></li><li><a href="dveep-special.html" class="nav-link" style="color:var(--accent-gold);">★ Dveep's Special</a></li><li><a href="elss.html" class="nav-link active">ELSS Tax Saver</a></li></ul><button class="btn btn-primary" onclick="openWhatsApp()">Book Consultation</button></div></nav>
+  <main class="main-wrapper">
+    <h1 style="font-size: 2.2rem;">ELSS Tax Saver vs Traditional PPF</h1>
+    <div class="grid-2" style="margin-top:1.5rem; gap:2rem; align-items:flex-start;">
+      <div class="card">
+        <div class="form-group"><div class="form-label"><span>Annual 80C Investment (₹)</span><span class="val-badge" id="elssAmtBadge">₹1,50,000</span></div><input type="range" class="range-slider" id="elssAmt" min="25000" max="150000" step="5000" value="150000" oninput="runELSS()"></div>
+        <div class="form-group"><div class="form-label"><span>Period (Years)</span><span class="val-badge" id="elssYrsBadge">15 Years</span></div><input type="range" class="range-slider" id="elssYrs" min="3" max="25" step="1" value="15" oninput="runELSS()"></div>
+        <div class="form-group"><div class="form-label"><span>ELSS Return (%)</span><span class="val-badge" id="elssRateBadge">13.5%</span></div><input type="range" class="range-slider" id="elssRate" min="8" max="18" step="0.5" value="13.5" oninput="runELSS()"></div>
+        <button class="btn btn-gold" style="width:100%;" onclick="openWhatsApp('Hi Dveep Sir, I want to invest in top ELSS tax-saver mutual funds.')">Save Tax with Dveep</button>
+      </div>
+      <div class="card">
+        <div class="grid-3" style="gap:1rem; margin-bottom:1.5rem;">
+          <div class="stat-box"><div class="stat-label">Invested</div><div class="stat-value" id="resBox1">₹22.50 L</div></div>
+          <div class="stat-box"><div class="stat-label">PPF (7.1%)</div><div class="stat-value" id="resBox2">₹40.68 L</div></div>
+          <div class="stat-box"><div class="stat-label">ELSS (13.5%)</div><div class="stat-value emerald" id="resBox3">₹71.95 L</div></div>
+        </div>
+        <div style="height:240px;"><canvas id="calcGenChart"></canvas></div>
+      </div>
+    </div>
+  </main>
+  <script src="../js/calculators.js"></script><script src="../js/main.js"></script>
+  <script>
+    let elssChart = null;
+    function runELSS() {
+      const amt = parseFloat(document.getElementById('elssAmt').value);
+      const yrs = parseFloat(document.getElementById('elssYrs').value);
+      const r = parseFloat(document.getElementById('elssRate').value);
+
+      document.getElementById('elssAmtBadge').textContent = formatINR(amt, false);
+      document.getElementById('elssYrsBadge').textContent = yrs + ' Years';
+      document.getElementById('elssRateBadge').textContent = r + '%';
+
+      const elssRes = calculateSIP(amt / 12, r, yrs);
+      const ppfRes = calculateSIP(amt / 12, 7.1, yrs);
+
+      document.getElementById('resBox1').textContent = formatINR(elssRes.invested);
+      document.getElementById('resBox2').textContent = formatINR(ppfRes.total);
+      document.getElementById('resBox3').textContent = formatINR(elssRes.total);
+
+      const ctx = document.getElementById('calcGenChart').getContext('2d');
+      if (elssChart) elssChart.destroy();
+      elssChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Total Invested', 'PPF Value (7.1%)', 'ELSS Wealth (' + r + '%)'],
+          datasets: [{ label: '15-Year Comparison', data: [elssRes.invested, ppfRes.total, elssRes.total], backgroundColor: ['#64748B', '#3B82F6', '#00D293'] }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#94A3B8' } }, y: { ticks: { color: '#94A3B8', callback: v => formatINR(v) } } } }
+      });
+    }
+    document.addEventListener('DOMContentLoaded', runELSS);
+  </script>
+</body>
+</html>
