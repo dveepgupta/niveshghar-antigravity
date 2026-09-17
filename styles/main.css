@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
-:root {
+/* Default / Theme 1: Royal Sapphire & Champagne Gold */
+:root, body.theme-royal {
   --bg-primary: #070D18;
   --bg-secondary: #0D1B2A;
   --bg-card: rgba(18, 32, 53, 0.75);
@@ -17,6 +18,7 @@
   --text-primary: #F8FAFC;
   --text-secondary: #94A3B8;
   --text-muted: #64748B;
+  --nav-bg: rgba(7, 13, 24, 0.88);
   --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   --radius-sm: 8px;
   --radius-md: 14px;
@@ -24,6 +26,80 @@
   --radius-full: 9999px;
   --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --bg-glow: radial-gradient(circle at 15% 15%, rgba(0, 210, 147, 0.07) 0%, transparent 40%),
+             radial-gradient(circle at 85% 85%, rgba(245, 166, 35, 0.06) 0%, transparent 40%);
+}
+
+/* Theme 2: Clean Institutional White & Navy Blue (Light Mode) */
+body.theme-light {
+  --bg-primary: #F8FAFC;
+  --bg-secondary: #FFFFFF;
+  --bg-card: rgba(255, 255, 255, 0.95);
+  --bg-card-hover: #FFFFFF;
+  --bg-input: #F1F5F9;
+  --border-color: rgba(15, 23, 42, 0.12);
+  --border-focus: #0284C7;
+  --accent-gold: #D97706;
+  --accent-gold-gradient: linear-gradient(135deg, #D97706 0%, #F59E0B 100%);
+  --accent-emerald: #059669;
+  --accent-emerald-gradient: linear-gradient(135deg, #059669 0%, #10B981 100%);
+  --accent-blue: #1D4ED8;
+  --accent-cyan: #0284C7;
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #94A3B8;
+  --nav-bg: rgba(255, 255, 255, 0.92);
+  --glass-shadow: 0 4px 20px 0 rgba(15, 23, 42, 0.06);
+  --bg-glow: radial-gradient(circle at 15% 15%, rgba(2, 132, 199, 0.06) 0%, transparent 40%),
+             radial-gradient(circle at 85% 85%, rgba(5, 150, 105, 0.06) 0%, transparent 40%);
+}
+
+/* Theme 3: Deep Forest Emerald & Warm Sovereign Gold (Growth & Wealth) */
+body.theme-forest {
+  --bg-primary: #041812;
+  --bg-secondary: #0A2E23;
+  --bg-card: rgba(10, 46, 35, 0.8);
+  --bg-card-hover: rgba(16, 68, 52, 0.9);
+  --bg-input: rgba(6, 30, 23, 0.95);
+  --border-color: rgba(5, 214, 158, 0.15);
+  --border-focus: #05D69E;
+  --accent-gold: #FBBF24;
+  --accent-gold-gradient: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%);
+  --accent-emerald: #05D69E;
+  --accent-emerald-gradient: linear-gradient(135deg, #05D69E 0%, #34D399 100%);
+  --accent-blue: #10B981;
+  --accent-cyan: #2DD4BF;
+  --text-primary: #F0FDF4;
+  --text-secondary: #86EFAC;
+  --text-muted: #4ADE80;
+  --nav-bg: rgba(4, 24, 18, 0.92);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+  --bg-glow: radial-gradient(circle at 15% 15%, rgba(5, 214, 158, 0.1) 0%, transparent 40%),
+             radial-gradient(circle at 85% 85%, rgba(251, 191, 36, 0.08) 0%, transparent 40%);
+}
+
+/* Theme 4: Titanium Charcoal & Electric Cyan (Fintech Modern) */
+body.theme-cyan {
+  --bg-primary: #0A0D14;
+  --bg-secondary: #121824;
+  --bg-card: rgba(18, 24, 36, 0.8);
+  --bg-card-hover: rgba(28, 38, 58, 0.9);
+  --bg-input: rgba(12, 16, 26, 0.95);
+  --border-color: rgba(6, 182, 212, 0.2);
+  --border-focus: #00F0FF;
+  --accent-gold: #38BDF8;
+  --accent-gold-gradient: linear-gradient(135deg, #0284C7 0%, #38BDF8 100%);
+  --accent-emerald: #00F0FF;
+  --accent-emerald-gradient: linear-gradient(135deg, #06B6D4 0%, #00F0FF 100%);
+  --accent-blue: #0284C7;
+  --accent-cyan: #00F0FF;
+  --text-primary: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --nav-bg: rgba(10, 13, 20, 0.92);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  --bg-glow: radial-gradient(circle at 15% 15%, rgba(0, 240, 255, 0.08) 0%, transparent 40%),
+             radial-gradient(circle at 85% 85%, rgba(56, 189, 248, 0.06) 0%, transparent 40%);
 }
 
 * {
@@ -40,11 +116,9 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-image: 
-    radial-gradient(circle at 15% 15%, rgba(0, 210, 147, 0.07) 0%, transparent 40%),
-    radial-gradient(circle at 85% 85%, rgba(245, 166, 35, 0.06) 0%, transparent 40%),
-    radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.04) 0%, transparent 50%);
+  background-image: var(--bg-glow);
   background-attachment: fixed;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1, h2, h3, h4, h5, h6, .brand-font {
@@ -64,9 +138,10 @@ a {
   z-index: 1000;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  background: rgba(7, 13, 24, 0.85);
+  background: var(--nav-bg);
   border-bottom: 1px solid var(--border-color);
-  padding: 1rem 2rem;
+  padding: 0.85rem 1.75rem;
+  transition: background-color 0.3s ease;
 }
 
 .nav-container {
@@ -75,13 +150,14 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  font-size: 1.4rem;
+  gap: 0.6rem;
+  font-size: 1.35rem;
   font-weight: 800;
   color: var(--text-primary);
 }
@@ -89,9 +165,9 @@ a {
 .logo-badge {
   background: var(--accent-gold-gradient);
   color: #070D18;
-  padding: 0.2rem 0.6rem;
+  padding: 0.2rem 0.5rem;
   border-radius: var(--radius-sm);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -100,16 +176,16 @@ a {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.25rem;
   list-style: none;
 }
 
 .nav-link {
   color: var(--text-secondary);
   font-weight: 500;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   transition: var(--transition-fast);
-  padding: 0.5rem 0.75rem;
+  padding: 0.45rem 0.7rem;
   border-radius: var(--radius-sm);
 }
 
@@ -121,7 +197,20 @@ a {
 .nav-cta {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.6rem;
+}
+
+.theme-selector {
+  background: var(--bg-input);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  padding: 0.45rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  font-family: inherit;
 }
 
 .btn {
@@ -210,7 +299,7 @@ a {
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #FFFFFF 20%, var(--accent-emerald) 70%, var(--accent-gold) 100%);
+  background: linear-gradient(135deg, var(--text-primary) 20%, var(--accent-emerald) 70%, var(--accent-gold) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -326,7 +415,7 @@ a {
   width: 100%;
   height: 6px;
   border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(128, 128, 128, 0.25);
   outline: none;
   margin: 0.5rem 0;
   cursor: pointer;
@@ -349,7 +438,7 @@ a {
 }
 
 .stat-box {
-  background: rgba(10, 22, 38, 0.6);
+  background: var(--bg-input);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: 1.25rem;
@@ -383,7 +472,7 @@ a {
 }
 
 .custom-table th {
-  background: rgba(10, 22, 38, 0.8);
+  background: var(--bg-input);
   padding: 0.85rem 1rem;
   text-align: left;
   color: var(--text-secondary);
@@ -393,7 +482,7 @@ a {
 
 .custom-table td {
   padding: 0.85rem 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid var(--border-color);
   color: var(--text-primary);
 }
 
@@ -404,7 +493,7 @@ a {
 .footer {
   margin-top: auto;
   border-top: 1px solid var(--border-color);
-  background: rgba(5, 10, 18, 0.95);
+  background: var(--bg-secondary);
   padding: 3rem 2rem 1.5rem;
   color: var(--text-secondary);
   font-size: 0.9rem;
@@ -417,7 +506,7 @@ a {
 
 .footer-disclaimer {
   padding: 1.25rem;
-  background: rgba(10, 22, 38, 0.8);
+  background: var(--bg-input);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   font-size: 0.82rem;
