@@ -3,27 +3,70 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dveep's Special Historical Backtest Calculator | NiveshGhar</title>
+  <title>Dveep's Special Market Drawdown & Recovery Calculator | NiveshGhar</title>
   <link rel="stylesheet" href="../styles/main.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .crisis-btn {
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-full);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border-color);
+      background: #FFFFFF;
+      color: var(--text-primary);
+      transition: all 0.2s ease;
+    }
+    .crisis-btn:hover, .crisis-btn.active {
+      background: var(--purple-primary);
+      color: #FFFFFF;
+      border-color: var(--purple-primary);
+      box-shadow: 0 4px 12px rgba(109, 40, 217, 0.25);
+    }
+    .behavior-card {
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      border: 1px solid var(--border-color);
+      position: relative;
+    }
+    .behavior-card.panic {
+      background: #FFF5F5;
+      border-color: #FED7D7;
+    }
+    .behavior-card.disciplined {
+      background: #F0FDF4;
+      border-color: #BBF7D0;
+      border-width: 2px;
+    }
+    .behavior-card.smart {
+      background: #FAF5FF;
+      border-color: #E9D5FF;
+    }
+    .behavior-card.fd {
+      background: #F8FAFC;
+      border-color: #E2E8F0;
+    }
+  </style>
 </head>
 <body>
+  <!-- Royal Purple Navbar -->
   <nav class="navbar">
     <div class="nav-container">
       <a href="../index.html" class="logo">
-        <span style="color: var(--accent-emerald);">◆</span> Nivesh<span style="color: var(--accent-gold);">Ghar</span>
-        <span class="logo-badge">Wealth Advisory</span>
+        <span style="color: #C4B5FD;">◆</span> Nivesh<span style="color: #DDD6FE;">Ghar</span>
+        <span class="logo-badge">Flagship Simulator</span>
       </a>
       <ul class="nav-links">
         <li><a href="../index.html" class="nav-link">Home</a></li>
-        <li><a href="dveep-special.html" class="nav-link active" style="color: var(--accent-gold); font-weight: 700;">★ Dveep's Special</a></li>
+        <li><a href="dveep-special.html" class="nav-link active" style="color: #DDD6FE; font-weight: 700;">★ Dveep's Special</a></li>
         <li><a href="sip.html" class="nav-link">SIP</a></li>
-        <li><a href="swp.html" class="nav-link">SWP (Retirement)</a></li>
+        <li><a href="swp.html" class="nav-link">SWP</a></li>
         <li><a href="goal-planner.html" class="nav-link">Goal Planner</a></li>
         <li><a href="../client-discovery.html" class="nav-link">20-Q Health Check</a></li>
       </ul>
       <div class="nav-cta">
-        <button class="btn btn-primary" onclick="openWhatsApp('Hi Dveep Sir, I want to review my historical backtest with you')">
+        <button class="btn btn-primary" onclick="openWhatsApp('Hi Dveep Sir, I want to review market drawdown recovery for my portfolio.')">
           <span>Book Consultation</span>
         </button>
       </div>
@@ -31,119 +74,212 @@
   </nav>
 
   <main class="main-wrapper">
+    <!-- Header Title -->
     <div style="margin-bottom: 2rem;">
-      <span class="badge-tag" style="background: rgba(245,166,35,0.2); color: var(--accent-gold);">★ EXCLUSIVE BACKTEST ENGINE</span>
-      <h1 style="font-size: 2.4rem; margin-top: 0.5rem;">Dveep's Special 25-Year Index Backtest Calculator</h1>
-      <p style="color: var(--text-secondary);">
-        Backtest actual historical performance across <strong>Nifty 50, Nifty Next 50, Nifty Midcap 150, Nifty Smallcap 250, Nifty 500, and Gold (2000–2025)</strong>.
+      <span class="badge-tag" style="margin-bottom: 0.5rem;">FLAGSHIP ADVISOR ENGINE</span>
+      <h1 style="font-size: 2.3rem; color: var(--text-primary); margin-top: 0.25rem;">
+        Dveep's Special: Market Drawdown & SIP Recovery Engine
+      </h1>
+      <p style="color: var(--text-secondary); max-width: 800px;">
+        Show clients why market drops are <strong>not losses, but "Festival Discount Sales"</strong> on mutual fund units that generate multi-fold long-term wealth through Rupee-Cost Averaging.
       </p>
     </div>
 
-    <div class="grid-2" style="align-items: flex-start; gap: 2rem;">
+    <!-- Educational Analogy Banner: The Festival Discount Principle -->
+    <div class="card" style="background: linear-gradient(135deg, #FAF8FD, #F3EEFB); border: 1px solid #E4DAF8; margin-bottom: 2rem; padding: 1.25rem 1.75rem;">
+      <div style="display: flex; gap: 1.25rem; align-items: center; flex-wrap: wrap;">
+        <div style="font-size: 2.2rem;">💡</div>
+        <div style="flex: 1;">
+          <strong style="color: var(--purple-primary); font-size: 1.05rem;">The Golden Rule of SIPs: "Buy More When On Sale"</strong>
+          <p style="color: var(--text-secondary); font-size: 0.88rem; margin-top: 0.25rem;">
+            When the market drops, a ₹500 SIP buys <strong>more units at a lower price</strong>. When the market inevitably rebounds, those accumulated discount units create explosive exponential wealth!
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1-Click Crisis Presets -->
+    <div class="card" style="margin-bottom: 2rem;">
+      <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.75rem;">
+        ⚡ 1-Click Historical Crisis Simulators:
+      </label>
+      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+        <button class="crisis-btn active" id="btnPresetCovid" onclick="setPreset('covid2020')">2020 COVID Crash (-38% Crash & +140% Boom)</button>
+        <button class="crisis-btn" id="btnPresetGfc" onclick="setPreset('gfc2008')">2008 Lehman Global Crisis (-55% Crash & Multi-Bagger)</button>
+        <button class="crisis-btn" id="btnPresetMidcap" onclick="setPreset('midcap2018')">2018-2021 Midcap Sideways & Explosion</button>
+        <button class="crisis-btn" id="btnPresetFull" onclick="setPreset('full25Y')">Full 25-Year Cycle (2000 - 2025)</button>
+      </div>
+    </div>
+
+    <!-- Input Controls & Simulation Horizon -->
+    <div class="grid-2" style="align-items: flex-start; gap: 2rem; margin-bottom: 2.5rem;">
       <div class="card">
-        <h2 style="font-size: 1.3rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between;">
-          <span>1. Investment Inputs</span>
-          <button class="btn btn-outline" style="padding: 0.35rem 0.8rem; font-size: 0.8rem;" onclick="resetDefaults()">Reset</button>
+        <h2 style="font-size: 1.25rem; margin-bottom: 1.5rem; color: var(--text-primary);">
+          1. Investor Parameters
         </h2>
 
         <div class="form-group">
-          <label class="form-label">Investment Mode</label>
-          <div style="display: flex; gap: 0.5rem;">
-            <button id="modeSIP" class="btn btn-primary" style="flex: 1;" onclick="setMode('sip')">Monthly SIP</button>
-            <button id="modeLump" class="btn btn-outline" style="flex: 1;" onclick="setMode('lump')">Lumpsum</button>
-            <button id="modeBoth" class="btn btn-outline" style="flex: 1;" onclick="setMode('both')">Hybrid (SIP + Lump)</button>
-          </div>
-        </div>
-
-        <div class="form-group" id="sipGroup">
           <div class="form-label">
-            <span>Monthly SIP Amount</span>
-            <span class="val-badge" id="sipVal">₹15,000</span>
+            <span>Monthly SIP Amount (₹)</span>
+            <span class="val-badge" id="sipValBadge">₹500</span>
           </div>
-          <input type="range" class="range-slider" id="sipInput" min="1000" max="200000" step="1000" value="15000" oninput="updateBacktest()">
-        </div>
-
-        <div class="form-group" id="lumpGroup" style="display: none;">
-          <div class="form-label">
-            <span>Initial Lumpsum Amount</span>
-            <span class="val-badge" id="lumpVal">₹5,00,000</span>
-          </div>
-          <input type="range" class="range-slider" id="lumpInput" min="25000" max="5000000" step="25000" value="500000" oninput="updateBacktest()">
-        </div>
-
-        <div class="form-group" id="stepUpGroup">
-          <div class="form-label">
-            <span>Annual SIP Step-Up (%)</span>
-            <span class="val-badge" id="stepUpVal">0%</span>
-          </div>
-          <input type="range" class="range-slider" id="stepUpInput" min="0" max="25" step="1" value="0" oninput="updateBacktest()">
+          <input type="range" class="range-slider" id="sipInput" min="500" max="50000" step="500" value="500" oninput="runSim()">
+          <small style="color: var(--text-muted); font-size: 0.78rem;">Test with even small ₹500/mo SIPs to show clients</small>
         </div>
 
         <div class="form-group">
-          <label class="form-label">Backtest Horizon (2000 to 2025)</label>
+          <label class="form-label">Selected Benchmark Index</label>
+          <select id="indexSelect" class="form-input" onchange="runSim()">
+            <option value="nifty50" selected>Nifty 50 TRI (Large Cap Index)</option>
+            <option value="niftyMidcap150">Nifty Midcap 150 TRI (High Growth Midcap)</option>
+            <option value="gold">Physical Gold (Hedge & Safety)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Custom Date Horizon</label>
           <div style="display: flex; gap: 1rem;">
             <div style="flex: 1;">
-              <label style="font-size: 0.8rem; color: var(--text-muted);">Start Year</label>
-              <select id="startYear" class="form-input" onchange="updateBacktest()">
-                <option value="2000" selected>2000 (25 Years)</option>
-                <option value="2005">2005 (20 Years)</option>
-                <option value="2010">2010 (15 Years)</option>
-                <option value="2015">2015 (10 Years)</option>
-                <option value="2020">2020 (5 Years)</option>
+              <label style="font-size: 0.78rem; color: var(--text-muted);">Start Year</label>
+              <select id="startYearSelect" class="form-input" onchange="runSim()">
+                <option value="2000">2000</option>
+                <option value="2005">2005</option>
+                <option value="2008">2008</option>
+                <option value="2010">2010</option>
+                <option value="2015">2015</option>
+                <option value="2018">2018</option>
+                <option value="2020" selected>2020</option>
               </select>
             </div>
             <div style="flex: 1;">
-              <label style="font-size: 0.8rem; color: var(--text-muted);">End Year</label>
-              <select id="endYear" class="form-input" onchange="updateBacktest()">
-                <option value="2025" selected>2025 (Latest)</option>
+              <label style="font-size: 0.78rem; color: var(--text-muted);">End Year</label>
+              <select id="endYearSelect" class="form-input" onchange="runSim()">
+                <option value="2021" selected>2021</option>
+                <option value="2023">2023</option>
                 <option value="2024">2024</option>
-                <option value="2020">2020</option>
-                <option value="2015">2015</option>
+                <option value="2025">2025</option>
               </select>
             </div>
           </div>
         </div>
 
-        <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
-          <button class="btn btn-gold" style="flex: 1;" onclick="printReport()">🖨️ Print Client Report</button>
-          <button class="btn btn-primary" style="flex: 1;" onclick="shareOnWhatsApp()">💬 WhatsApp Client Summary</button>
+        <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem;">
+          <button class="btn btn-primary" style="flex: 1;" onclick="shareClientWhatsApp()">
+            💬 Share Client Pitch on WhatsApp
+          </button>
+          <button class="btn btn-outline-dark" onclick="printReport()">
+            🖨️ Print Handout
+          </button>
         </div>
       </div>
 
+      <!-- Live Chart -->
       <div class="card">
-        <h2 style="font-size: 1.3rem; margin-bottom: 1rem;">2. Wealth Growth Trajectory</h2>
-        <div style="position: relative; height: 320px; width: 100%;">
-          <canvas id="backtestChart"></canvas>
+        <h2 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary);">
+          2. Wealth Trajectory: Panicked vs Disciplined
+        </h2>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;" id="chartSubtitle">
+          Watch how patient SIP investing outperforms panic withdrawals & Bank FDs.
+        </p>
+        <div style="position: relative; height: 310px; width: 100%;">
+          <canvas id="recoveryChart"></canvas>
         </div>
       </div>
     </div>
 
-    <div style="margin-top: 2.5rem;">
-      <h2 style="font-size: 1.5rem; margin-bottom: 1.25rem;">3. Benchmark Performance Matrix</h2>
-      <div class="grid-3" id="benchmarkCards"></div>
+    <!-- 4-Way Behavioral Comparison Cards (The Core Client Explainer) -->
+    <div style="margin-bottom: 3rem;">
+      <h2 style="font-size: 1.4rem; margin-bottom: 1.25rem; color: var(--text-primary);">
+        3. Real Client Case Study: 4 Reactions to Market Crashes
+      </h2>
+
+      <div class="grid-4">
+        <!-- 1. Panicked Client -->
+        <div class="behavior-card panic">
+          <span class="badge-tag" style="background: #FEE2E2; color: #DC2626; margin-bottom: 0.5rem;">🛑 PANICKED & STOPPED</span>
+          <h3 style="font-size: 1.1rem; color: #991B1B; margin-bottom: 0.35rem;">Stopped on ₹5 Drop</h3>
+          <p style="font-size: 0.8rem; color: #7F1D1D; margin-bottom: 0.75rem;">
+            Withdrew in month 1-6 at the market bottom. Locked in permanent paper loss.
+          </p>
+          <div style="border-top: 1px solid #FECACA; padding-top: 0.5rem; font-size: 0.82rem;">
+            <div>Invested: <strong id="panicInv">₹3,000</strong></div>
+            <div>Withdrawn: <strong id="panicWith" style="color: #DC2626;">₹2,820</strong></div>
+            <div style="margin-top: 0.35rem; color: #B91C1C; font-weight: 700;">
+              Regret Cost: <span id="panicLoss">₹15,000+ lost</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Disciplined Client -->
+        <div class="behavior-card disciplined">
+          <span class="badge-tag green" style="margin-bottom: 0.5rem;">🛡️ DISCIPLINED INVESTOR</span>
+          <h3 style="font-size: 1.1rem; color: #065F46; margin-bottom: 0.35rem;">Continued Systematic SIP</h3>
+          <p style="font-size: 0.8rem; color: #047857; margin-bottom: 0.75rem;">
+            Ignored short-term noise. Bought extra cheap units during the crash discount.
+          </p>
+          <div style="border-top: 1px solid #A7F3D0; padding-top: 0.5rem; font-size: 0.82rem;">
+            <div>Invested: <strong id="discInv">₹12,000</strong></div>
+            <div>Final Value: <strong id="discVal" style="color: #059669; font-size: 1.1rem;">₹24,800</strong></div>
+            <div style="margin-top: 0.35rem; color: #047857; font-weight: 700;">
+              Net Gain: <span id="discGain">+₹12,800 (2.06x)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Smart Opportunity Investor -->
+        <div class="behavior-card smart">
+          <span class="badge-tag" style="margin-bottom: 0.5rem;">🚀 OPPORTUNISTIC TOP-UP</span>
+          <h3 style="font-size: 1.1rem; color: var(--purple-primary); margin-bottom: 0.35rem;">Top-Up During Sale</h3>
+          <p style="font-size: 0.8rem; color: #6B21A8; margin-bottom: 0.75rem;">
+            Added +50% extra SIP whenever the index dropped 15%+ to maximize discount units.
+          </p>
+          <div style="border-top: 1px solid #DDD6FE; padding-top: 0.5rem; font-size: 0.82rem;">
+            <div>Invested: <strong id="smartInv">₹15,000</strong></div>
+            <div>Final Value: <strong id="smartVal" style="color: var(--purple-primary); font-size: 1.1rem;">₹33,400</strong></div>
+            <div style="margin-top: 0.35rem; color: var(--purple-primary); font-weight: 700;">
+              Net Gain: <span id="smartGain">+₹18,400 (2.22x)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Bank FD Saver -->
+        <div class="behavior-card fd">
+          <span class="badge-tag" style="background: #F1F5F9; color: #475569; margin-bottom: 0.5rem;">🏦 BANK FD (6.5%)</span>
+          <h3 style="font-size: 1.1rem; color: #334155; margin-bottom: 0.35rem;">Zero Volatility Trap</h3>
+          <p style="font-size: 0.8rem; color: #64748B; margin-bottom: 0.75rem;">
+            Zero temporary drops, but wealth severely eroded by 6% inflation and tax.
+          </p>
+          <div style="border-top: 1px solid #E2E8F0; padding-top: 0.5rem; font-size: 0.82rem;">
+            <div>Invested: <strong id="fdInv">₹12,000</strong></div>
+            <div>Final Value: <strong id="fdVal">₹12,820</strong></div>
+            <div style="margin-top: 0.35rem; color: #64748B; font-weight: 700;">
+              Net Gain: <span id="fdGain">+₹820</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="card" style="margin-top: 2.5rem;">
-      <h2 style="font-size: 1.3rem; margin-bottom: 1rem;">4. Year-by-Year Value Breakdown (₹)</h2>
+    <!-- Detailed Year-by-Year Unit Accumulation Table -->
+    <div class="card" style="margin-bottom: 3rem;">
+      <h2 style="font-size: 1.3rem; margin-bottom: 1rem; color: var(--text-primary);">
+        4. Detailed Unit Accumulation & Compounding Schedule
+      </h2>
       <div style="overflow-x: auto;">
-        <table class="custom-table" id="trajectoryTable"></table>
+        <table class="custom-table" id="simTable">
+          <!-- Injected via JS -->
+        </table>
       </div>
     </div>
   </main>
 
+  <!-- Royal Purple Footer -->
   <footer class="footer">
     <div class="footer-container">
       <div class="footer-disclaimer">
-        <strong>Regulatory & AMFI Disclosure:</strong> Mutual Fund investments are subject to market risks, read all scheme related documents carefully. Past performance of benchmark indices (Nifty 50, Nifty Next 50, Nifty Midcap 150, Nifty Smallcap 250, Nifty 500, Gold) is for illustrative and backtesting educational purposes only and does not guarantee future returns. NiveshGhar advisory services are provided by Dveep, AMFI Registered Mutual Fund Distributor / CFA charterholder.
+        <strong>Advisory Disclosure:</strong> Mutual Fund investments are subject to market risks, read all scheme related documents carefully. Past historical index performance demonstrates the power of Rupee-Cost Averaging over full market cycles and does not guarantee fixed future returns. Fiduciary wealth consulting provided by Dveep, AMFI Registered Mutual Fund Distributor / CFA charterholder.
       </div>
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-        <div><p>© 2026 <strong>NiveshGhar</strong>. Crafted for discerning investors by Dveep Wealth Advisory.</p></div>
-        <div style="display: flex; gap: 1.5rem;">
-          <a href="../index.html" class="nav-link">Home</a>
-          <a href="dveep-special.html" class="nav-link">Backtest Engine</a>
-          <a href="../client-discovery.html" class="nav-link">Client Discovery</a>
-        </div>
-      </div>
+      <p>© 2026 <strong>NiveshGhar</strong>. Designed for disciplined wealth creation.</p>
     </div>
   </footer>
 
@@ -151,149 +287,172 @@
   <script src="../js/historical-data.js"></script>
   <script src="../js/main.js"></script>
   <script>
-    let currentMode = 'sip';
     let chartInstance = null;
 
-    function setMode(mode) {
-      currentMode = mode;
-      document.getElementById('modeSIP').className = mode === 'sip' ? 'btn btn-primary' : 'btn btn-outline';
-      document.getElementById('modeLump').className = mode === 'lump' ? 'btn btn-primary' : 'btn btn-outline';
-      document.getElementById('modeBoth').className = mode === 'both' ? 'btn btn-primary' : 'btn btn-outline';
+    function setPreset(presetKey) {
+      const p = CRISIS_PRESETS[presetKey];
+      if (!p) return;
 
-      document.getElementById('sipGroup').style.display = (mode === 'sip' || mode === 'both') ? 'block' : 'none';
-      document.getElementById('stepUpGroup').style.display = (mode === 'sip' || mode === 'both') ? 'block' : 'none';
-      document.getElementById('lumpGroup').style.display = (mode === 'lump' || mode === 'both') ? 'block' : 'none';
+      document.querySelectorAll('.crisis-btn').forEach(b => b.classList.remove('active'));
+      if (presetKey === 'covid2020') document.getElementById('btnPresetCovid').classList.add('active');
+      if (presetKey === 'gfc2008') document.getElementById('btnPresetGfc').classList.add('active');
+      if (presetKey === 'midcap2018') document.getElementById('btnPresetMidcap').classList.add('active');
+      if (presetKey === 'full25Y') document.getElementById('btnPresetFull').classList.add('active');
 
-      updateBacktest();
+      document.getElementById('startYearSelect').value = p.startYear;
+      document.getElementById('endYearSelect').value = p.endYear;
+      document.getElementById('chartSubtitle').textContent = p.desc;
+      runSim();
     }
 
-    function resetDefaults() {
-      document.getElementById('sipInput').value = 15000;
-      document.getElementById('lumpInput').value = 500000;
-      document.getElementById('stepUpInput').value = 0;
-      document.getElementById('startYear').value = 2000;
-      document.getElementById('endYear').value = 2025;
-      setMode('sip');
-    }
-
-    function updateBacktest() {
-      const sip = (currentMode === 'sip' || currentMode === 'both') ? parseFloat(document.getElementById('sipInput').value) : 0;
-      const lump = (currentMode === 'lump' || currentMode === 'both') ? parseFloat(document.getElementById('lumpInput').value) : 0;
-      const stepUp = (currentMode === 'sip' || currentMode === 'both') ? parseFloat(document.getElementById('stepUpInput').value) : 0;
-      
-      const startYear = parseInt(document.getElementById('startYear').value);
-      const endYear = parseInt(document.getElementById('endYear').value);
-
-      document.getElementById('sipVal').textContent = formatINR(sip, false);
-      document.getElementById('lumpVal').textContent = formatINR(lump, false);
-      document.getElementById('stepUpVal').textContent = stepUp + '%';
+    function runSim() {
+      const sip = parseFloat(document.getElementById('sipInput').value);
+      const indexKey = document.getElementById('indexSelect').value;
+      let startYear = parseInt(document.getElementById('startYearSelect').value);
+      let endYear = parseInt(document.getElementById('endYearSelect').value);
 
       if (startYear >= endYear) {
-        alert("Start year must be before End year!");
-        return;
+        endYear = startYear + 1;
+        document.getElementById('endYearSelect').value = endYear;
       }
 
-      const backtest = runHistoricalBacktest(startYear, endYear, sip, lump, stepUp);
-      renderChart(backtest);
-      renderCards(backtest);
-      renderTable(backtest);
+      document.getElementById('sipValBadge').textContent = formatINR(sip, false);
+
+      const sim = simulateBehavioralDrawdown(startYear, endYear, sip, indexKey);
+
+      // Populate 4 Behavioral Cards
+      document.getElementById('panicInv').textContent = formatINR(sim.panicked.invested);
+      document.getElementById('panicWith').textContent = formatINR(sim.panicked.withdrawnAtBottom);
+      document.getElementById('panicLoss').textContent = "Missed: " + formatINR(sim.panicked.opportunityLoss);
+
+      document.getElementById('discInv').textContent = formatINR(sim.disciplined.invested);
+      document.getElementById('discVal').textContent = formatINR(sim.disciplined.finalValue);
+      document.getElementById('discGain').textContent = "+" + formatINR(sim.disciplined.gain) + " (" + sim.disciplined.multiplier + ")";
+
+      document.getElementById('smartInv').textContent = formatINR(sim.smart.invested);
+      document.getElementById('smartVal').textContent = formatINR(sim.smart.finalValue);
+      document.getElementById('smartGain').textContent = "+" + formatINR(sim.smart.gain) + " (" + sim.smart.multiplier + ")";
+
+      document.getElementById('fdInv').textContent = formatINR(sim.bankFD.invested);
+      document.getElementById('fdVal').textContent = formatINR(sim.bankFD.finalValue);
+      document.getElementById('fdGain').textContent = "+" + formatINR(sim.bankFD.gain);
+
+      renderChart(sim);
+      renderTable(sim);
     }
 
-    function renderCards(backtest) {
-      const container = document.getElementById('benchmarkCards');
-      container.innerHTML = '';
-      
-      Object.keys(backtest.results).forEach(key => {
-        const item = backtest.results[key];
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.style.borderTop = `3px solid ${item.color}`;
-        card.innerHTML = `
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-            <strong style="color: ${item.color}; font-size: 1.15rem;">${item.benchmark}</strong>
-            <span class="badge-tag" style="background: rgba(255,255,255,0.05); color: var(--text-secondary);">${item.category}</span>
-          </div>
-          <div style="margin: 1rem 0;">
-            <div style="font-size: 0.8rem; color: var(--text-muted);">FINAL MATURITY VALUE</div>
-            <div style="font-size: 1.7rem; font-weight: 800; font-family: Outfit; color: var(--text-primary);">${formatINR(item.finalValue)}</div>
-          </div>
-          <div class="grid-2" style="gap: 0.5rem; border-top: 1px solid var(--border-color); padding-top: 0.75rem; font-size: 0.85rem;">
-            <div><span style="color: var(--text-muted);">Total Invested:</span><br><strong>${formatINR(item.totalInvested)}</strong></div>
-            <div><span style="color: var(--text-muted);">Multiplier:</span><br><strong style="color: var(--accent-emerald);">${item.multiplier}</strong></div>
-            <div><span style="color: var(--text-muted);">Net Gain:</span><br><strong style="color: var(--accent-gold);">${formatINR(item.gain)}</strong></div>
-            <div><span style="color: var(--text-muted);">Approx CAGR:</span><br><strong style="color: ${item.color};">${item.cagr}</strong></div>
-          </div>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    function renderChart(backtest) {
-      const ctx = document.getElementById('backtestChart').getContext('2d');
-      const labels = backtest.years;
-
-      const datasets = Object.keys(backtest.results).map(key => {
-        const item = backtest.results[key];
-        return {
-          label: item.benchmark,
-          data: item.trajectory.map(t => t.value),
-          borderColor: item.color,
-          backgroundColor: item.color + '15',
-          borderWidth: 2.5,
-          tension: 0.3,
-          pointRadius: 3
-        };
-      });
+    function renderChart(sim) {
+      const ctx = document.getElementById('recoveryChart').getContext('2d');
+      const labels = sim.years.map(y => 'Yr ' + y);
 
       if (chartInstance) chartInstance.destroy();
 
       chartInstance = new Chart(ctx, {
         type: 'line',
-        data: { labels, datasets },
+        data: {
+          labels,
+          datasets: [
+            {
+              label: '🛡️ Disciplined SIP (Continued)',
+              data: sim.disciplined.trajectory.map(t => t.value),
+              borderColor: '#059669',
+              backgroundColor: 'rgba(5, 150, 105, 0.1)',
+              borderWidth: 3,
+              tension: 0.3,
+              fill: true
+            },
+            {
+              label: '🚀 Smart Top-Up (Bought during Sale)',
+              data: sim.smart.trajectory.map(t => t.value),
+              borderColor: '#7C3AED',
+              borderWidth: 2.5,
+              borderDash: [5, 5],
+              tension: 0.3
+            },
+            {
+              label: '🏦 Bank FD (6.5%)',
+              data: sim.bankFD.trajectory.map(t => t.value),
+              borderColor: '#64748B',
+              borderWidth: 2,
+              tension: 0.1
+            },
+            {
+              label: '🛑 Panicked Client (Stopped Month 1-6)',
+              data: sim.panicked.trajectory.map(t => t.value),
+              borderColor: '#DC2626',
+              borderWidth: 2,
+              pointRadius: 4
+            }
+          ]
+        },
         options: {
           responsive: true,
           maintainAspectRatio: false,
           interaction: { mode: 'index', intersect: false },
           plugins: {
-            legend: { labels: { color: '#94A3B8', font: { family: 'Plus Jakarta Sans' } } },
+            legend: { position: 'top', labels: { boxWidth: 12, font: { family: 'Plus Jakarta Sans', size: 11 } } },
             tooltip: { callbacks: { label: (c) => ` ${c.dataset.label}: ${formatINR(c.raw)}` } }
           },
           scales: {
-            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94A3B8' } },
-            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94A3B8', callback: (v) => formatINR(v) } }
+            x: { grid: { color: 'rgba(0,0,0,0.04)' } },
+            y: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { callback: v => formatINR(v) } }
           }
         }
       });
     }
 
-    function renderTable(backtest) {
-      const table = document.getElementById('trajectoryTable');
-      const years = backtest.years;
-      const keys = Object.keys(backtest.results);
+    function renderTable(sim) {
+      const table = document.getElementById('simTable');
+      let html = `
+        <thead>
+          <tr>
+            <th>Year</th>
+            <th>Market Level</th>
+            <th>Total Invested</th>
+            <th>Units Bought</th>
+            <th>Disciplined Value (₹)</th>
+            <th>Bank FD Value (₹)</th>
+            <th>Difference / Advantage</th>
+          </tr>
+        </thead>
+        <tbody>
+      `;
 
-      let headHTML = '<thead><tr><th>Year</th><th>Total Invested</th>';
-      keys.forEach(k => { headHTML += `<th style="color:${backtest.results[k].color}">${backtest.results[k].benchmark}</th>`; });
-      headHTML += '</tr></thead><tbody>';
-
-      years.forEach((yr, idx) => {
-        headHTML += `<tr><td><strong>${yr}</strong></td><td>${formatINR(backtest.results[keys[0]].trajectory[idx].invested)}</td>`;
-        keys.forEach(k => { headHTML += `<td>${formatINR(backtest.results[k].trajectory[idx].value)}</td>`; });
-        headHTML += '</tr>';
+      sim.schedule.forEach(row => {
+        const diff = row.discValue - row.fdValue;
+        html += `
+          <tr>
+            <td><strong>${row.year}</strong></td>
+            <td>${row.price.toLocaleString('en-IN')}</td>
+            <td>${formatINR(row.discInvested)}</td>
+            <td><span class="badge-tag green">${row.discUnits} Units</span></td>
+            <td><strong style="color: #059669;">${formatINR(row.discValue)}</strong></td>
+            <td>${formatINR(row.fdValue)}</td>
+            <td style="color: ${diff >= 0 ? '#059669' : '#DC2626'}; font-weight: 700;">
+              ${diff >= 0 ? '+' : ''}${formatINR(diff)}
+            </td>
+          </tr>
+        `;
       });
 
-      headHTML += '</tbody>';
-      table.innerHTML = headHTML;
+      html += '</tbody>';
+      table.innerHTML = html;
     }
 
-    function shareOnWhatsApp() {
-      const sip = document.getElementById('sipVal').textContent;
-      const start = document.getElementById('startYear').value;
-      const end = document.getElementById('endYear').value;
-      const msg = `*NiveshGhar Backtest Summary by Dveep (CFA/MFD)*\nInvestment: ${sip} / month\nPeriod: ${start} to ${end}\n\nCheck how Nifty 50, Midcaps & Gold turned disciplined SIPs into multi-crore wealth. Schedule your portfolio review today!`;
+    function shareClientWhatsApp() {
+      const sip = document.getElementById('sipValBadge').textContent;
+      const start = document.getElementById('startYearSelect').value;
+      const end = document.getElementById('endYearSelect').value;
+      const gain = document.getElementById('discGain').textContent;
+      const missed = document.getElementById('panicLoss').textContent;
+
+      const msg = `*NiveshGhar Advisory Insight by Dveep (CFA/MFD)*\n\n📌 *Why Market Drops are a Gift for SIP Investors:*\nWhen the market dropped between ${start} and ${end}, a disciplined ₹${sip}/month investor accumulated cheap units that turned into *${gain}*!\n\nMeanwhile, a client who panicked and stopped locked in a loss (${missed}).\n\n*Rule: Volatility is the price you pay for superior multi-crore wealth. Don't stop your SIP during a sale!*`;
       openWhatsApp(msg);
     }
 
-    document.addEventListener('DOMContentLoaded', updateBacktest);
+    document.addEventListener('DOMContentLoaded', () => {
+      setPreset('covid2020');
+    });
   </script>
 </body>
 </html>
